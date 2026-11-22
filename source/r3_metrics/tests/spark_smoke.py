@@ -90,7 +90,7 @@ def main():
             pieces.append(project_partition(sql, part, ['id', 'creation_date', 'month'],
                                             'users', 'regression.example', year))
         merged = pieces[0].unionAll(pieces[1])
-        observed = sorted((r['year'], r['id']) for r in merged.collect())
+        observed = sorted((r.year, r.id) for r in merged.collect())
         assert observed == [(2019, 101), (2020, 201), (2020, 202)], observed
         calendar = []
         for site, group in [('a', 'A'), ('b', 'B')]:

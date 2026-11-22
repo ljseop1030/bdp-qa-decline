@@ -57,6 +57,7 @@ hdfs dfs -cat /project/statistics/full-001/_R3_SUCCESS.json
 | `--log-root` | `r3_metrics/batch_logs` |
 | `--driver-memory` | `768m` |
 
+서빙 등록 SQL의 `r3_serving_uri`에는 이름노드 주소가 포함된 완전한 HDFS URI를 사용합니다.
 같은 R2 metastore의 `hive-site.xml`을 사용해야 합니다. 별도 Spark 설정은 `R3_SPARK_CONF_DIR`로 지정합니다.
 HDFS 경로 옵션은 `hdfs:///...` URI가 아닌 `/project/...` 형식으로 입력합니다.
 
@@ -98,7 +99,8 @@ new_users_count BIGINT, answered_rate DOUBLE, downvote_ratio DOUBLE`입니다.
 다음 명령은 기존 서빙 테이블의 조회 대상을 바꾸므로 R2 담당자와 실행 경로를 맞춰 사용합니다.
 
 ```bash
-hive --hiveconf r3_serving_path=/project/statistics/full-001/site_metrics_monthly -f sql/register_serving.hql
+R3_FS=$(hdfs getconf -confKey fs.defaultFS)
+hive --hiveconf r3_serving_uri="${R3_FS%/}/project/statistics/full-001/site_metrics_monthly" -f sql/register_serving.hql
 impala-shell -q 'INVALIDATE METADATA qa_decline.site_metrics_monthly; REFRESH qa_decline.site_metrics_monthly;'
 impala-shell -q 'SELECT COUNT(*) FROM qa_decline.site_metrics_monthly; SELECT site, COUNT(*) FROM qa_decline.site_metrics_monthly GROUP BY site;'
 ```
@@ -124,5 +126,6 @@ bash tests/test_vm.sh --run-id verify-001 --check-hive --hive-database qa_declin
 
 실패 시 `results/<run-id>/failure.json`, `batch_logs/<run-id>/failure.json`과 사이트 로그를 확인합니다.
 입력 문제를 해결한 뒤 새 실행 ID로 재실행합니다. 기존 결과를 덮어쓰거나 자동 삭제하지 않습니다.
-기존 VM 검증 이력은 `docs/VALIDATION_KO.md`에 있습니다. 이번 폴더 변경과 파일명 완화는 호스트에서 검증하며
-수업 VM 재실행은 별도로 필요합니다. 130사이트 전체 VM 완료 기록은 없습니다.
+현재 구조에서 실제 VM의 Python 2.7 테스트 46개, Spark 1.3 합성 시험, Hive 입력 10사이트·630행 계산과
+기준값 대조, Hive·Impala 서빙 조회를 통과했습니다. 상세 결과는 `tests/RESULTS_2026-11-22.md`,
+기존 이력은 `docs/VALIDATION_KO.md`에 있습니다. 130사이트 전체 VM 완료 기록은 없습니다.
