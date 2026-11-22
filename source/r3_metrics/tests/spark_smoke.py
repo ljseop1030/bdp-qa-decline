@@ -4,7 +4,7 @@ from __future__ import print_function
 import argparse
 import os
 import sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'load'))
 from common import SERVING, calendar_rows, epoch, validate_monthly
 from spark_job import project_partition, configure_sql, input_quality, empty_frame, create_sql_context, calculate, signature, register, save_serving, schemas
 

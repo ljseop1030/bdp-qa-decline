@@ -4,7 +4,7 @@ import copy
 import os
 import sys
 import unittest
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'load'))
 from common import calendar_rows, check_paths, check_status, epoch, month_keys, validate_monthly
 from report import holm, indexed, rank_test, comparisons
 

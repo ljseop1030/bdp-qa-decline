@@ -7,7 +7,7 @@ import shutil
 import sys
 import tempfile
 import unittest
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'load'))
 import run as runner
 from common import ROOT, read_json, write_json
 from test_core import sample_rows
@@ -46,7 +46,7 @@ class Completion(unittest.TestCase):
                     run_id='run-001', output_base='/project/statistics', work_root=os.path.join(self.temp, 'work'), log_root=os.path.join(self.temp, 'logs'))
         statuses = dict((s, {}) for s in self.sites)
         runner.preflight = lambda args, sites: (statuses, {'snapshot': 'before'}, 'simulated')
-        runner.status_snapshot = lambda source, sites: (statuses, {'snapshot': 'before'})
+        runner.status_snapshot = lambda source, sites, input_mode='parquet': (statuses, {'snapshot': 'before'})
         def capture(args):
             self.commands.append(args)
             return ''
@@ -174,7 +174,7 @@ class Completion(unittest.TestCase):
 
     def test_changed_r1_snapshot_prevents_completion(self):
         self.args.site = ['cs.stackexchange.com']
-        runner.status_snapshot = lambda source, sites: ({}, {'snapshot': 'changed'})
+        runner.status_snapshot = lambda source, sites, input_mode='parquet': ({}, {'snapshot': 'changed'})
         with self.assertRaises(ValueError):
             runner.run(self.args)
         self.assertFalse(os.path.exists(os.path.join(self.args.local_output, 'validated.json')))

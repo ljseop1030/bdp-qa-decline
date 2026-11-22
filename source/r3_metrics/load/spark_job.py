@@ -78,7 +78,7 @@ def register(df, name):
 def calculate(sql, calendar):
     if calendar is not None:
         register(sql.createDataFrame(calendar, schemas()['calendar']), 'analysis_calendar')
-    with open(os.path.join(ROOT, 'metrics.sql'), 'r') as f:
+    with open(os.path.join(os.path.dirname(ROOT), 'sql', 'metrics.sql'), 'r') as f:
         for block in f.read().split('-- @view '):
             if block.strip():
                 name, query = block.split('\n', 1)

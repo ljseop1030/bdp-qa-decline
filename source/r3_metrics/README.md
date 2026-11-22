@@ -1,72 +1,128 @@
-# R3 지표 산출 — 팀 저장소 반영본
+# r3_metrics — R3 지표 산출
 
-## 저장소에 넣는 방법
+R2의 `qa_decline.posts`, `users`, `votes`를 Spark로 읽어 월별 지표와 A/B 비교 통계를 계산합니다.
+수업 VM의 CentOS 6.6 / CDH 5.4.3 / Spark 1.3 / Java 7 / Python 2.7을 사용하며 추가 pip 설치는 필요하지 않습니다.
 
-이 ZIP을 팀 저장소 루트에 압축 해제하면 `source/r3_metrics/`만 추가됩니다.
-기존 루트 README·.gitignore·.gitattributes 및 R1/R2/R4 파일을 교체하지 않습니다.
-`r3_metrics_repo_ready` 같은 포장 폴더가 저장소 안에 한 겹 더 들어가지 않게 합니다.
-ZIP 자체를 커밋하지 말고 압축 해제된 소스를 커밋합니다.
+| 경로 | 내용 |
+|---|---|
+| `load/run_r3.sh`, `load/preflight_check.sh` | 실행·입력 사전 점검 |
+| `load/run.py`, `load/spark_job.py` | Hive 입력 검증, Spark 집계, Parquet 저장·재읽기 |
+| `load/report.py`, `load/common.py` | 통계·그래프, 입력·출력 계약 |
+| `load/config.json`, `load/selected_sites.json`, `load/sites_130.txt` | 기간·관측창·대상 130사이트(A118/B12) |
+| `load/classification_evidence.json`, `docs/classification_source.md` | 사이트 분류 근거 |
+| `load/spark-conf/spark-env.sh` | 수업 VM Spark/Hive 클래스패스 설정 |
+| `sql/metrics.sql` | 질문 수·신규 계정 수·7일 내 답변률·다운보트 비율 |
+| `sql/register_serving.hql` | R2 서빙 테이블 연결 |
+| `tests/` | 단위 테스트, Spark smoke, VM 대조 도구와 집계 기준 |
+| `docs/` | 지표 정의·호환성·기존 VM 검증 기록 |
 
-팀 저장소 루트에서 추가 파일과 제외 규칙을 확인합니다.
+## 순서
 
-```bash
-git status --short --untracked-files=all -- source/r3_metrics
-git check-ignore source/r3_metrics/r3_statistics_package_v0.2_130/results/check.csv
-git add -- source/r3_metrics
-git diff --cached --stat -- source/r3_metrics
-```
-
-## 포함된 패키지
-
-`r3_statistics_package_v0.2_130/`은 최신 Hive 10사이트 검증 이력을 포함한 v0.2.0 소스입니다.
-분류·설정·Spark 설정·SQL·시험 코드·문서·집계 대조용 JSON을 함께 유지했습니다.
-`scope_reference_audit.json`은 시험 도구가 사용하는 월별 집계 기준이며 원천 덤프가 아닙니다.
-원본 CSV/XML/Parquet/7z, 실행 결과·로그·캐시, 압축 배포본은 포함하지 않습니다.
-
-- 분석 범위: 본 사이트 130개(A118/B12), meta 제외, 2019-01~2024-03.
-- 입력: R1 v0.3 / dump_date=2024-04-02, HDFS `/project/parquet` 및 완료 status.
-- 환경: 수업 VM Python 2.7 / Spark 1.3 / Java 7.
-- 지표 정의·NULL 정책·관측 범위는 패키지 README_KO.md와 METHODS_KO.md를 따릅니다.
-
-## 무결성과 실행
-
-팀 저장소 루트에서 아래 명령을 실행합니다. 셸 스크립트는 LF이며 `bash`로 실행합니다.
+아래 명령은 `source/r3_metrics`에서 실행합니다. R2의 서비스 기동·DDL 생성·완료 파티션 등록을 먼저 끝냅니다.
+R1/R2가 같은 입력을 변경하는 동안 R3를 실행하지 않습니다.
 
 ```bash
 cd source/r3_metrics
 sha256sum -c SHA256SUMS.txt
-cd r3_statistics_package_v0.2_130
-sha256sum -c SHA256SUMS.txt
-bash run_r3.sh --input-mode hive --hive-database qa_decline --preflight --site cs.stackexchange.com --run-id r3-team-preflight-001
-bash run_r3.sh --input-mode hive --hive-database qa_decline --site cs.stackexchange.com --run-id r3-team-trial-001
+export R3_PYTHON=/usr/local/bin/python2.7
+
+# 1) R2 입력 확인
+hive -S -e 'DESCRIBE qa_decline.posts; SHOW PARTITIONS qa_decline.posts;'
+hdfs dfs -cat /project/parquet/_status/cs.stackexchange.com.posts.json
+
+# 2) 한 사이트 사전 점검과 실제 실행. 기본 입력 모드는 hive.
+bash load/preflight_check.sh --site cs.stackexchange.com --run-id trial-001
+bash load/run_r3.sh --site cs.stackexchange.com --run-id trial-001
+
+# 3) 130사이트의 입력이 모두 준비되면 전체 실행
+bash load/run_r3.sh --run-id full-001
+
+# 4) 완료 확인
+cat results/full-001/validated.json
+hdfs dfs -cat /project/statistics/full-001/_R3_SUCCESS.json
 ```
 
-실행 ID는 매 실제 실행마다 새로 지정합니다. Hive 모드는 R2 원본 테이블·완료 파티션과
-동일 metastore 설정이 준비되어야 합니다. Parquet 직접 읽기는 `--input-mode parquet`입니다.
-130사이트 전체 입력이 준비되면 `--site`를 생략해 전체 실행합니다.
-현대 Python 호스트에서 단위 테스트만 실행하려면 패키지 폴더에서:
+실제 실행마다 새 `--run-id`를 사용합니다. 한 사이트 성공은 `SUBSET ONLY`, 63행이며
+전체 성공은 `full_scope=true`, 130사이트·8,190행입니다. 부분 실행은 전체 A/B 통계를 만들지 않습니다.
+사전 점검은 파일·status·환경 확인이고, Hive 연결·스키마·행 수 검증은 실제 Spark 실행에서 수행합니다.
+
+| 옵션 | 기본값 |
+|---|---|
+| `--input-mode` | `hive` (`parquet` 지정 시 R1 파일 직접 읽기) |
+| `--hive-database` | `qa_decline` |
+| `--hive-conf-dir` | `/etc/hive/conf` (`HIVE_CONF_DIR` 지정 시 해당 경로) |
+| `--input-root` | HDFS `/project/parquet` |
+| `--output-base` | HDFS `/project/statistics` |
+| `--work-root` | `r3_metrics/results` |
+| `--log-root` | `r3_metrics/batch_logs` |
+| `--driver-memory` | `768m` |
+
+같은 R2 metastore의 `hive-site.xml`을 사용해야 합니다. 별도 Spark 설정은 `R3_SPARK_CONF_DIR`로 지정합니다.
+HDFS 경로 옵션은 `hdfs:///...` URI가 아닌 `/project/...` 형식으로 입력합니다.
+
+## R2 입력 형식
+
+| 테이블 | 데이터 열(순서·타입) | 파티션 |
+|---|---|---|
+| `posts` | `id BIGINT, post_type_id INT, creation_date BIGINT, parent_id BIGINT, month INT` | `site STRING, year INT` |
+| `users` | `id BIGINT, creation_date BIGINT, month INT` | `site STRING, year INT` |
+| `votes` | `id BIGINT, vote_type_id INT, creation_date BIGINT, month INT` | `site STRING, year INT` |
+
+LOCATION은 `/project/parquet/<table>/site=<site>/year=<YYYY>`입니다.
+`creation_date`는 UTC Unix 초, `month`는 정수 1~12이며 `site`는 호스트명입니다.
+R2 조회 API나 7열 서빙 결과를 입력으로 읽는 방식이 아닙니다.
+
+`/project/parquet/_status/<site>.<table>.json`에 `site`, `table`, `rows`,
+오름차순·중복 없는 정수 `years`, `finished_at`, `parser_version=v0.3`, `dump_date=2024-04-02`가 필요합니다.
+R3는 LOCATION, 등록 연도, 실제 행 수, 필수값, 사이트 내 ID 중복 및 실행 전후 status 변경을 검사합니다.
+Hive 모드는 연도 폴더의 Parquet 파일명을 제한하지 않습니다. 여러 part 파일도 Hive 테이블로 읽습니다.
+`--input-mode parquet` 직접 읽기는 R1의 연도별 `part-YYYY.parquet` 파일명을 사용합니다.
+
+## 결과 저장과 R2/R4 연결
+
+7열 순서는 `site STRING, month STRING, domain_group STRING, questions_count BIGINT,
+new_users_count BIGINT, answered_rate DOUBLE, downvote_ratio DOUBLE`입니다.
+키는 `(site, month)`, 월은 `YYYY-MM`, 비율은 0~1이며 NULL과 0을 구분합니다.
+2019-01~2024-03을 보존하고 관측 가능한 범위 밖의 값은 NULL입니다.
+
+| 위치 | 내용 |
+|---|---|
+| HDFS `/project/statistics/<run-id>/site_metrics_monthly` | Snappy Parquet, 여러 part 파일 가능 |
+| `results/<run-id>/site_metrics_monthly.csv` | 같은 7열, NULL은 빈 칸 |
+| `results/<run-id>/monthly_metrics_audit.json` | 분자·분모·관측 플래그 |
+| `results/<run-id>/validated.json` | 완료 여부·입력/출력 해시 |
+| `results/<run-id>/REPORT_KO.md`, `results/<run-id>/charts/` | 통계 보고서·SVG 그래프 |
+| `batch_logs/<run-id>/` | 사이트별 Spark 및 통합 로그 |
+
+성공 결과를 확인한 뒤 R2 서빙 테이블의 LOCATION을 해당 실행으로 연결합니다.
+다음 명령은 기존 서빙 테이블의 조회 대상을 바꾸므로 R2 담당자와 실행 경로를 맞춰 사용합니다.
 
 ```bash
-python -B -m unittest discover -s tests -p 'test_*.py' -v
+hive --hiveconf r3_serving_path=/project/statistics/full-001/site_metrics_monthly -f sql/register_serving.hql
+impala-shell -q 'INVALIDATE METADATA qa_decline.site_metrics_monthly; REFRESH qa_decline.site_metrics_monthly;'
+impala-shell -q 'SELECT COUNT(*) FROM qa_decline.site_metrics_monthly; SELECT site, COUNT(*) FROM qa_decline.site_metrics_monthly GROUP BY site;'
 ```
 
-## R2/R4 연결
+전체 결과는 총 8,190행·130사이트·사이트당 63행인지 확인합니다.
+이어서 R2 폴더의 `api/start_api.sh`와 `tests/api_smoke.sh`로 API를 확인합니다.
+이미 실행 중인 API는 60초 캐시가 만료된 뒤 확인하거나 R2의 중지·시작 스크립트로 재기동합니다.
+R4에는 7열 결과와 `validated.json`, `load/config.json`, `load/selected_sites.json`을 전달합니다.
+결과·덤프·로그는 Git에 추가하지 않습니다.
 
-결과는 HDFS `/project/statistics/<run-id>/site_metrics_monthly` 및 로컬
-`results/<run-id>/`에 생성됩니다. R2 기존 서빙 LOCATION
-`/project/serving/site_metrics_monthly`와 다르므로 R2 담당자가 성공 실행의 경로로
-외부 테이블 LOCATION을 연결하고 Hive/Impala 조회를 검증해야 합니다.
-`site_metrics_monthly_schema.sql`은 참고 DDL이며 R3가 자동 실행하지 않습니다.
-기존 R2 DDL은 CREATE IF NOT EXISTS 방식이므로 이미 있는 테이블의 LOCATION을
-다시 생성 명령만으로 바꿀 수 없습니다. R2 담당자가 변경 절차를 적용합니다.
+## 테스트와 오류 확인
 
-7열 순서: `site, month, domain_group, questions_count, new_users_count, answered_rate, downvote_ratio`.
-R4에는 성공한 실행의 7열 결과, `validated.json`, config·분류 버전을 별도로 전달합니다.
-생성 CSV·Parquet과 실행 로그를 Git에 추가하지 않습니다.
+```bash
+# 현대 Python 호스트 단위 테스트
+python -B -m unittest discover -s tests -p 'test_*.py' -v
 
-## 검증 범위
+# 수업 VM 합성 데이터와 Parquet 저장·재읽기
+bash tests/smoke_test.sh --output /project/statistics/smoke-001
 
-기존 패키지 문서의 후속 VM 검증 기록은 Hive 입력 10사이트/630행,
-로컬 대조 8,820셀 불일치 0입니다. 130사이트 전체 완료를 뜻하지 않습니다.
-전체 완료 기준은 `full_scope=true`, 130사이트, 8,190행입니다.
-포장 시 확인한 호스트 테스트 및 파일 검사 결과는 PACKAGING_CHECK_KO.md를 참고하세요.
+# 별도 종합 시험: Parquet 경로 시험도 포함하며 전체 130사이트 입력 필요
+bash tests/test_vm.sh --run-id verify-001 --check-hive --hive-database qa_decline
+```
+
+실패 시 `results/<run-id>/failure.json`, `batch_logs/<run-id>/failure.json`과 사이트 로그를 확인합니다.
+입력 문제를 해결한 뒤 새 실행 ID로 재실행합니다. 기존 결과를 덮어쓰거나 자동 삭제하지 않습니다.
+기존 VM 검증 이력은 `docs/VALIDATION_KO.md`에 있습니다. 이번 폴더 변경과 파일명 완화는 호스트에서 검증하며
+수업 VM 재실행은 별도로 필요합니다. 130사이트 전체 VM 완료 기록은 없습니다.

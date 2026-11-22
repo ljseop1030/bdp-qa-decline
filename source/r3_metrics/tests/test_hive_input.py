@@ -4,7 +4,7 @@ import os
 import sys
 import unittest
 import types
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'load'))
 from spark_job import load_hive, create_sql_context, empty_frame, hive_locations, project_partition
 
 

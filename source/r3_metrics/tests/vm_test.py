@@ -11,6 +11,7 @@ import sys
 import time
 import traceback
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'load'))
 from common import AUDIT, ROOT, check_paths, digest, read_json, validate_monthly, write_json, write_text
 from run import exists_hdfs
 
@@ -127,7 +128,7 @@ def experiment(args, root, hdfs_run):
     state = {}
 
     def integrity(stage, log):
-        log_command(stage, ['sha256sum', '-c', 'SHA256SUMS.txt'], ROOT, log)
+        log_command(stage, ['sha256sum', '-c', 'SHA256SUMS.txt'], os.path.dirname(ROOT), log)
         if sys.version_info[:2] != (2, 7):
             raise ValueError('Expected Python 2.7. Set R3_PYTHON to the interpreter used by R1.')
         from common import load_scope
@@ -136,7 +137,7 @@ def experiment(args, root, hdfs_run):
             raise ValueError('Expected the approved 130-site scope')
         state['sites'] = sites
         state['trial_sites'] = {TRIAL_SITE: sites[TRIAL_SITE]}
-        baseline = os.path.join(ROOT, 'scope_reference_audit.json')
+        baseline = os.path.join(os.path.dirname(ROOT), 'tests', 'scope_reference_audit.json')
         state['reference'] = checked_rows(read_json(baseline), sites)
         report['reference_sha256'] = digest(baseline)
         if exists_hdfs(hdfs_run):
@@ -145,7 +146,7 @@ def experiment(args, root, hdfs_run):
         log_command(stage, ['hdfs', 'dfs', '-mkdir', hdfs_run], root, log)
 
     def smoke(stage, log):
-        log_command(stage, ['bash', os.path.join(ROOT, 'smoke_test.sh'), '--output', hdfs_run + '/smoke'],
+        log_command(stage, ['bash', os.path.join(os.path.dirname(ROOT), 'tests', 'smoke_test.sh'), '--output', hdfs_run + '/smoke'],
                     root, log)
         with open(os.path.join(root, stage['log']), 'rb') as smoke_log:
             if not any(b'SMOKE PASS:' in line for line in smoke_log):
@@ -222,7 +223,7 @@ def main():
     parser.add_argument('--run-id', default='vm-test-' + datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'))
     parser.add_argument('--input-root', default='/project/parquet')
     parser.add_argument('--output-base', default='/project/statistics')
-    parser.add_argument('--work-root', default=os.path.join(ROOT, 'results', 'vm-tests'))
+    parser.add_argument('--work-root', default=os.path.join(os.path.dirname(ROOT), 'results', 'vm-tests'))
     parser.add_argument('--driver-memory', default='768m', help='Driver memory for actual R3 runs')
     parser.add_argument('--check-hive', action='store_true', help='Also verify one site through R2 Hive')
     parser.add_argument('--hive-database', default='qa_decline')

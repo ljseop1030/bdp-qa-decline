@@ -15,7 +15,7 @@ from report import generate
 
 
 def resolve_paths(args):
-    args.input_mode = getattr(args, 'input_mode', 'parquet')
+    args.input_mode = getattr(args, 'input_mode', 'hive')
     args.hive_database = getattr(args, 'hive_database', 'qa_decline')
     args.hive_conf_dir = getattr(args, 'hive_conf_dir', os.environ.get('HIVE_CONF_DIR', '/etc/hive/conf'))
     if args.input_mode not in ('parquet', 'hive'):
@@ -54,7 +54,7 @@ def exists_hdfs(path):
     return p.returncode == 0
 
 
-def status_snapshot(source, sites):
+def status_snapshot(source, sites, input_mode='parquet'):
     statuses, hashes = {}, {}
     expected_files, roots = set(), []
     for site in sorted(sites):
@@ -73,7 +73,15 @@ def status_snapshot(source, sites):
         # One JVM invocation for all selected trees, rather than one per year/file.
         listing = capture(['hdfs', 'dfs', '-ls', '-R'] + roots)
         actual_files = set(line.split()[-1] for line in listing.splitlines() if line.startswith('-'))
-        missing = expected_files - actual_files
+        if input_mode == 'hive':
+            # R2 registers year directories, allowing arbitrary Parquet part names.
+            expected_years = set(path.rsplit('/', 1)[0] for path in expected_files)
+            actual_years = set(path.rsplit('/', 1)[0] for path in actual_files
+                               if path.endswith('.parquet'))
+            missing = expected_years - actual_years
+        else:
+            # Direct R1 reads still use the original annual filename contract.
+            missing = expected_files - actual_files
         if missing:
             raise ValueError('Missing R1 Parquet: ' + ', '.join(sorted(missing)))
     return statuses, hashes
@@ -85,6 +93,9 @@ def implementation_hashes():
         if name.endswith(('.py', '.sql', '.json', '.sh', '.txt')) and name != 'SHA256SUMS.txt':
             result[name] = digest(os.path.join(ROOT, name))
     result['spark-conf/spark-env.sh'] = digest(os.path.join(ROOT, 'spark-conf', 'spark-env.sh'))
+    for name in sorted(os.listdir(os.path.join(os.path.dirname(ROOT), 'sql'))):
+        if name.endswith('.sql'):
+            result['sql/' + name] = digest(os.path.join(os.path.dirname(ROOT), 'sql', name))
     return result
 
 
@@ -124,7 +135,7 @@ def preflight(args, sites):
     capture(['hdfs', 'dfs', '-ls', '/'])
     if exists_hdfs(args.output_root):
         raise ValueError('HDFS output exists; choose a new run name: ' + args.output_root)
-    statuses, hashes = status_snapshot(args.input_root, sites)
+    statuses, hashes = status_snapshot(args.input_root, sites, args.input_mode)
     if args.input_mode == 'hive':
         if not os.path.isfile(os.path.join(args.hive_conf_dir, 'hive-site.xml')):
             raise ValueError('Missing hive-site.xml in --hive-conf-dir: ' + args.hive_conf_dir)
@@ -216,7 +227,7 @@ def run(args):
                'receipt': os.path.join(combine, 'spark_success.json')}, combine, args)
         if read_json(os.path.join(combine, 'spark_success.json'))['rows'] != 63 * len(sites):
             raise ValueError('Missing combined output receipt')
-        if status_snapshot(args.input_root, sites)[1] != hashes:
+        if status_snapshot(args.input_root, sites, args.input_mode)[1] != hashes:
             raise ValueError('R1 status changed during run; result is not publishable')
         if implementation_hashes() != code_hashes:
             raise ValueError('Implementation changed during run')
@@ -249,15 +260,15 @@ def run(args):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--input-mode', choices=('parquet', 'hive'), default='parquet')
+    p.add_argument('--input-mode', choices=('parquet', 'hive'), default='hive')
     p.add_argument('--hive-database', default='qa_decline')
     p.add_argument('--hive-conf-dir', default=os.environ.get('HIVE_CONF_DIR', '/etc/hive/conf'),
                    help='Directory containing the R2 metastore hive-site.xml; added to Hive driver classpath')
     p.add_argument('--input-root', default='/project/parquet')
     p.add_argument('--output-base', default='/project/statistics', help='HDFS results parent; run ID is appended')
     p.add_argument('--run-id', help='Default: UTC timestamp, matching R1 batch_logs naming')
-    p.add_argument('--work-root', default=os.path.join(ROOT, 'results'), help='Default: <package>/results; local work/results parent')
-    p.add_argument('--log-root', default=os.path.join(ROOT, 'batch_logs'), help='Default: <package>/batch_logs')
+    p.add_argument('--work-root', default=os.path.join(os.path.dirname(ROOT), 'results'), help='Default: <r3_metrics>/results; local work/results parent')
+    p.add_argument('--log-root', default=os.path.join(os.path.dirname(ROOT), 'batch_logs'), help='Default: <r3_metrics>/batch_logs')
     p.add_argument('--output-root', help='Override exact HDFS output; default /project/statistics/<run-id>')
     p.add_argument('--local-output', help='Override exact local output; default <work-root>/<run-id>')
     p.add_argument('--driver-memory', default='768m')
