@@ -1,0 +1,6 @@
+# R3 v0.1: no additional pip packages required.
+# Python 2.7 standard library: reports, exact permutation tests, CSV and SVG.
+# PySpark is supplied by the course VM Spark 1.3.0 / CDH installation.
+# DO NOT pip-install a modern pyspark into this VM runtime.
+# Future third-party Python dependencies must be pinned and VM-tested here.
+# Non-pip prerequisites: Java 7, Hadoop 2.6/CDH 5.4.3, Spark 1.3.x, bash.

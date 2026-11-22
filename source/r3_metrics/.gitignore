@@ -1,0 +1,20 @@
+# R3 runtime files, source dumps and distribution archives
+results/
+batch_logs/
+previous-results/
+__pycache__/
+*.py[cod]
+*.csv
+*.tsv
+*.parquet
+*.7z
+*.xml
+*.zip
+*.tar.gz
+*.bundle
+*.log
+.env
+.venv/
+metastore_db/
+derby.log
+spark-warehouse/
