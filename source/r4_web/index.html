@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q&amp;A community decline tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Q&amp;A community decline tracker</h1>
+    <p class="sub">Monthly activity per Stack Exchange site. Dump of <span id="dump-date">loading</span>.</p>
+  </div>
+  <span id="source" class="source">loading</span>
+</header>
+
+<div class="app">
+  <aside class="panel">
+    <fieldset>
+      <legend>View</legend>
+      <label class="opt"><input type="radio" name="view" value="sites" checked> Compare sites</label>
+      <label class="opt"><input type="radio" name="view" value="group"> Domain groups (A vs B)</label>
+      <label class="opt" id="view-trend-opt"><input type="radio" name="view" value="trend"> Q2 trend vs actual</label>
+    </fieldset>
+
+    <fieldset id="trend-site-box" class="is-hidden">
+      <legend><label for="trend-site">Site</label></legend>
+      <select id="trend-site"></select>
+    </fieldset>
+
+    <fieldset id="group-box">
+      <legend>Domain group</legend>
+      <label class="opt"><input type="radio" name="group" value="all" checked> All groups</label>
+      <label class="opt"><input type="radio" name="group" value="A"> A: LLM-strong</label>
+      <label class="opt"><input type="radio" name="group" value="B"> B: experience</label>
+      <label class="opt"><input type="radio" name="group" value="C"> C: undecided</label>
+    </fieldset>
+
+    <fieldset id="sites-box">
+      <legend>Sites <span id="site-count" class="hint"></span></legend>
+      <div id="site-list" class="site-list"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><label for="metric">Metric</label></legend>
+      <select id="metric">
+        <option value="questions_count">Questions per month</option>
+        <option value="new_users_count">New users per month</option>
+        <option value="answered_rate">Share of questions answered</option>
+        <option value="downvote_ratio">Share of votes that are downvotes</option>
+      </select>
+    </fieldset>
+
+    <fieldset id="scale-box">
+      <legend>Scale</legend>
+      <label class="opt"><input type="radio" name="scale" value="index" checked> Index, 2019 = 100</label>
+      <label class="opt"><input type="radio" name="scale" value="raw"> Raw values</label>
+    </fieldset>
+
+    <form id="period-form">
+      <fieldset>
+        <legend>Period</legend>
+        <div class="period">
+          <label>From <input id="from" type="text" placeholder="YYYY-MM" maxlength="7"></label>
+          <label>To <input id="to" type="text" placeholder="latest" maxlength="7"></label>
+        </div>
+        <button type="submit">Apply period</button>
+      </fieldset>
+    </form>
+  </aside>
+
+  <main class="main">
+    <div id="error" class="error" role="alert"></div>
+    <p id="pilot-flag" class="pilot-flag is-hidden">Pilot, 10 sites. Exploratory: not evidence of an LLM effect.</p>
+    <p id="y-label" class="y-label"></p>
+    <div id="chart-wrap" class="chart-wrap">
+      <canvas id="chart"></canvas>
+    </div>
+    <ul id="notes" class="notes"></ul>
+
+    <table class="summary is-hidden" id="summary-group">
+      <caption id="group-caption"></caption>
+      <thead><tr><th>Group</th><th class="num">Sites</th><th class="num">Median</th><th class="num">Q1 to Q3</th></tr></thead>
+      <tbody id="group-body"></tbody>
+    </table>
+
+    <table class="summary" id="summary-sites">
+      <caption id="summary-caption">Same month for every site, compared with each site's 2019 average</caption>
+      <thead><tr><th>Site</th><th>Group</th><th class="num">Index</th><th>Note</th></tr></thead>
+      <tbody id="summary-body"></tbody>
+    </table>
+
+    <table class="summary is-hidden" id="summary-trend">
+      <caption>Q2 trial (pilot, exploratory): pre-LLM trend extended past Nov 2022, compared with placebo breaks</caption>
+      <tbody id="trend-body"></tbody>
+    </table>
+  </main>
+</div>
+
+<script src="Chart.min.js"></script>
+<script src="pilot_data.js"></script>
+<script src="mock_api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
