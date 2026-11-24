@@ -147,9 +147,25 @@ def validate_monthly(rows, sites):
     return [dict((k, r.get(k)) for k in AUDIT) for r in sorted(rows, key=lambda r: (r['site'], r['month']))]
 
 
+def load_config(profile='category'):
+    if profile == 'category':
+        return read_json(os.path.join(ROOT, 'config.json'))
+    if not re.match(r'^[a-z0-9][a-z0-9_-]*$', profile):
+        raise ValueError('Invalid scope profile name')
+    return read_json(os.path.join(ROOT, 'scopes', profile, 'config.json'))
+
+
+def scope_file(config, key, default):
+    relative = config.get(key, default)
+    path = os.path.abspath(os.path.join(ROOT, relative))
+    if (os.path.isabs(relative) or not path.startswith(os.path.abspath(ROOT) + os.sep)):
+        raise ValueError('Scope file must stay under load/')
+    return path
+
+
 def load_scope(config=None):
-    config = config or read_json(os.path.join(ROOT, 'config.json'))
-    path = os.path.join(ROOT, 'selected_sites.json')
+    config = config or load_config()
+    path = scope_file(config, 'selection_file', 'selected_sites.json')
     if digest(path) != config['selection_sha256']:
         raise ValueError('Selection hash mismatch')
     selection = read_json(path)
@@ -157,15 +173,17 @@ def load_scope(config=None):
     if selection['protocol_version'] != config['scope_id']:
         raise ValueError('Scope version mismatch')
     counts = dict((g, list(sites.values()).count(g)) for g in ('A', 'B'))
-    if len(sites) != 130 or counts != {'A': 118, 'B': 12}:
-        raise ValueError('Expected the approved A118/B12 scope')
-    if config['expected_sites'] != 130 or config['expected_groups'] != counts or config['expected_rows'] != 8190:
+    if (not sites or any(g not in ('A', 'B') for g in sites.values())
+            or not counts['A'] or not counts['B']):
+        raise ValueError('Scope must contain nonempty A and B groups only')
+    if (config['expected_sites'] != len(sites) or config['expected_groups'] != counts
+            or config['expected_rows'] != len(month_keys()) * len(sites)):
         raise ValueError('Scope completion contract mismatch')
     for site in sites:
         if (not re.match(r'^[a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]{2,}$', site)
                 or site == 'stackoverflow.com' or 'meta' in site.split('.')):
             raise ValueError('Invalid or excluded main site hostname: ' + site)
-    evidence = read_json(os.path.join(ROOT, 'classification_evidence.json'))
+    evidence = read_json(scope_file(config, 'classification_file', 'classification_evidence.json'))
     if len(evidence) != len(sites) or dict((r['site'], r['group']) for r in evidence) != sites:
         raise ValueError('Classification evidence differs from approved scope')
     return sites

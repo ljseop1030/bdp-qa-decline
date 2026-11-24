@@ -1,0 +1,27 @@
+{
+  "analysis_last_row": "2024-03",
+  "analysis_start": "2019-01",
+  "answer_window_days": 7,
+  "classification_file": "scopes/legacy130/classification_evidence.json",
+  "community_policy": "exclude_users_id_minus_one",
+  "coverage_end_exclusive": "2024-03-01T00:00:00Z",
+  "coverage_status": "conservative_analysis_assumption_not_certified_source_cutoff",
+  "expected_groups": {
+    "A": 118,
+    "B": 12
+  },
+  "expected_rows": 8190,
+  "expected_sites": 130,
+  "meta_policy": "excluded",
+  "metric_contract": "R2_R4_v1_7columns",
+  "package_version": "0.3.0",
+  "primary_comparison": "2022_vs_2023_matched_January_to_October",
+  "r1_dump_date": "2024-04-02",
+  "r1_parser_version": "v0.3",
+  "scope_id": "team-adjudicated-130-v1",
+  "scope_profile": "legacy130",
+  "selection_file": "scopes/legacy130/selected_sites.json",
+  "selection_sha256": "e7c6aa903f456e0a6190c5b7a0f8378410139722b8de3bd897c2f797e9f310bd",
+  "selection_status": "Historical A118/B12 scope; explicit opt-in only",
+  "statistics": "exact_rank_sum_dynamic_programming_Holm_4_and_12"
+}

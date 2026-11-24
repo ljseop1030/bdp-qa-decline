@@ -1,123 +1,13 @@
 [
   {
     "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/0/4, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc778\uacf5\uc9c0\ub2a5\uc758 \uac1c\ub150\uacfc \uc0ac\ud68c\uc801 \uc601\ud5a5.",
-    "site": "ai.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/4/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc548\ub4dc\ub85c\uc774\ub4dc \uc6b4\uc601\uccb4\uc81c\u00b7\uae30\uae30 \uc0ac\uc6a9.",
-    "site": "android.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc560\ub2c8\uba54\uc774\uc158\uacfc \ub9cc\ud654.",
-    "site": "anime.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/3/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Apple \uae30\uae30\uc640 \uc18c\ud504\ud2b8\uc6e8\uc5b4.",
-    "site": "apple.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 23/5/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Arduino \ud638\ud658 \ud558\ub4dc\uc6e8\uc5b4\uc640 \ud504\ub85c\uadf8\ub798\ubc0d.",
-    "site": "arduino.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Ubuntu \uc124\uce58\u00b7\uc0ac\uc6a9\u00b7\uac1c\ubc1c.",
-    "site": "askubuntu.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 24/3/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ucc9c\ubb38\ud559\uacfc \ucc9c\uccb4\ubb3c\ub9ac\ud559.",
-    "site": "astronomy.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud56d\uacf5\uae30 \uc6b4\ud56d\u00b7\uc815\ube44\uc640 \ud56d\uacf5.",
-    "site": "aviation.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 25/3/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc601\uc0c1 \uc81c\uc791\u00b7\ud3b8\uc9d1\uacfc \ubbf8\ub514\uc5b4 \uc7a5\ube44.",
-    "site": "avp.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/1/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc0dd\ubb3c\uc815\ubcf4\ud559\uacfc \uc0dd\ubb3c \ub370\uc774\ud130 \ubd84\uc11d.",
-    "site": "bioinformatics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 25/1/4, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc0dd\ubb3c\ud559 \uc5f0\uad6c\uc640 \uac1c\ub150.",
-    "site": "biology.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/2/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ube44\ud2b8\ucf54\uc778 \ud504\ub85c\ud1a0\ucf5c\uacfc \uc0ac\uc6a9.",
-    "site": "bitcoin.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Blender \uae30\ubc18 3D \ubaa8\ub378\ub9c1\u00b7\uc560\ub2c8\uba54\uc774\uc158.",
-    "site": "blender.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/0/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubcf4\ub4dc\uac8c\uc784 \uaddc\uce59\u00b7\ud50c\ub808\uc774\u00b7\uc124\uacc4.",
-    "site": "boardgames.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 25/4/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud654\ud559 \uc774\ub860\uacfc \uc2e4\ud5d8.",
-    "site": "chemistry.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 24/4/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uccb4\uc2a4 \uaddc\uce59\u00b7\uc804\uc220\u00b7\uc804\ub7b5.",
-    "site": "chess.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/0/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc911\uad6d\uc5b4\uc758 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
-    "site": "chinese.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uae30\ub3c5\uad50 \uad50\ub9ac\u00b7\uc804\ud1b5\u00b7\uc2e4\ucc9c.",
-    "site": "christianity.stackexchange.com"
-  },
-  {
-    "group": "A",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 CiviCRM \uc124\uc815\uacfc \uc6b4\uc601.",
     "site": "civicrm.stackexchange.com"
   },
   {
     "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud504\ub85c\uadf8\ub798\ubc0d \ud37c\uc990\uacfc \ucf54\ub4dc \uae38\uc774 \uacbd\uc7c1.",
-    "site": "codegolf.stackexchange.com"
-  },
-  {
-    "group": "A",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ucf54\ub4dc \uac80\ud1a0\uc640 \uad6c\ud604 \uac1c\uc120.",
     "site": "codereview.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 25/3/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc778\uc9c0\uacfc\ud559\u00b7\uc2ec\ub9ac\ud559\u00b7\uc2e0\uacbd\uacfc\ud559.",
-    "site": "cogsci.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ucef4\ud4e8\ud130 \uadf8\ub798\ud53d\uc2a4 \uc5f0\uad6c\uc640 \uad6c\ud604.",
-    "site": "computergraphics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Craft CMS \uac1c\ubc1c\u00b7\uc124\uc815\u00b7\uc6b4\uc601.",
-    "site": "craftcms.stackexchange.com"
   },
   {
     "group": "B",
@@ -126,33 +16,8 @@
   },
   {
     "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc554\ud638\ud559\uc758 \uc218\ud559\uc801 \uc6d0\ub9ac\uc640 \uad6c\ud604.",
-    "site": "crypto.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/0/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ucef4\ud4e8\ud130\uacfc\ud559 \uac1c\ub150\uacfc \uc54c\uace0\ub9ac\uc998.",
-    "site": "cs.stackexchange.com"
-  },
-  {
-    "group": "A",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc774\ub860 \ucef4\ud4e8\ud130\uacfc\ud559 \uc5f0\uad6c.",
     "site": "cstheory.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/1/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub370\uc774\ud130 \uacfc\ud559\uacfc \uba38\uc2e0\ub7ec\ub2dd.",
-    "site": "datascience.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub370\uc774\ud130\ubca0\uc774\uc2a4 \uc124\uacc4\u00b7\uc6b4\uc601\u00b7\uc131\ub2a5.",
-    "site": "dba.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ube4c\ub4dc\u00b7\ud14c\uc2a4\ud2b8\u00b7\ubc30\ud3ec \uc790\ub3d9\ud654\uc640 \uc11c\ube44\uc2a4 \ubaa8\ub2c8\ud130\ub9c1.",
-    "site": "devops.stackexchange.com"
   },
   {
     "group": "B",
@@ -161,83 +26,13 @@
   },
   {
     "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Drupal \uac1c\ubc1c\u00b7\uc124\uc815\u00b7\uc6b4\uc601.",
-    "site": "drupal.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc2e0\ud638\u00b7\uc774\ubbf8\uc9c0\u00b7\uc601\uc0c1 \ucc98\ub9ac.",
-    "site": "dsp.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/2/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc9c0\uc9c8\u00b7\uae30\uc0c1\u00b7\ud574\uc591\u00b7\ud658\uacbd\uacfc\ud559.",
-    "site": "earthscience.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uacbd\uc81c\ud559 \uc774\ub860\uacfc \uacc4\ub7c9\uacbd\uc81c\ud559.",
-    "site": "economics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\ub2f4\ub2f9\uc790 \uc870\uc815 A/B/C 23/6/1, A \uc720\uc9c0. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc804\uc790\ud68c\ub85c \uc124\uacc4\uc640 \uc804\uae30\uc804\uc790 \uacf5\ud559.",
-    "site": "electronics.stackexchange.com"
-  },
-  {
-    "group": "A",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 elementary OS\uc640 \uad00\ub828 \uc571\uc758 \uc0ac\uc6a9\u00b7\uac1c\ubc1c.",
     "site": "elementaryos.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc601\uc5b4 \ud559\uc2b5\uc790\uc758 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
-    "site": "ell.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Emacs \uc0ac\uc6a9\u00b7\uc124\uc815\u00b7\ud655\uc7a5.",
-    "site": "emacs.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc601\uc5b4 \uc5b4\ud718\u00b7\ubb38\ubc95\u00b7\uc5b4\uc6d0\u00b7\uc6a9\ubc95.",
-    "site": "english.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 EOS.IO \ube14\ub85d\uccb4\uc778\uacfc \ubd84\uc0b0 \uc571 \uac1c\ubc1c.",
-    "site": "eosio.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc2a4\ud398\uc778\uc5b4 \ud504\ub85c\uadf8\ub798\ubc0d\u00b7\uc18c\ud504\ud2b8\uc6e8\uc5b4 \uac1c\ubc1c.",
-    "site": "es.stackoverflow.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc774\ub354\ub9ac\uc6c0\uacfc \uc2a4\ub9c8\ud2b8 \uacc4\uc57d\u00b7\ubd84\uc0b0 \uc571.",
-    "site": "ethereum.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 24/2/4, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud574\uc678 \uc7a5\uae30 \uac70\uc8fc\uc640 \uc815\ucc29.",
-    "site": "expatriates.stackexchange.com"
   },
   {
     "group": "B",
     "reason": "\ub2f4\ub2f9\uc790 \uc870\uc815 A/B/C 8/21/1, B \uc720\uc9c0. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc6b4\ub3d9 \uc218\ud589\u00b7\ud6c8\ub828\u00b7\uccb4\ub825 \uad00\ub9ac.",
     "site": "fitness.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud504\ub791\uc2a4\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
-    "site": "french.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uac8c\uc784 \uc81c\uc791\uacfc \uac1c\ubc1c \uae30\uc220.",
-    "site": "gamedev.stackexchange.com"
   },
   {
     "group": "A",
@@ -250,59 +45,9 @@
     "site": "gardening.stackexchange.com"
   },
   {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub3c5\uc77c\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\ubc88\uc5ed.",
-    "site": "german.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc9c0\ub9ac\uc815\ubcf4\uc2dc\uc2a4\ud15c\u00b7\uacf5\uac04 \ub370\uc774\ud130\u00b7\uc9c0\ub3c4 \uc81c\uc791.",
-    "site": "gis.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 25/1/4, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uadf8\ub798\ud53d \ub514\uc790\uc778\uacfc \ub514\uc790\uc778 \ub3c4\uad6c.",
-    "site": "graphicdesign.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\ub2f4\ub2f9\uc790 \uc870\uc815 A/B/C 23/6/1, C \u2192 A. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc544\ub9c8\ucd94\uc5b4 \ubb34\uc120\u00b7\uc1a1\uc218\uc2e0 \ud68c\ub85c\u00b7\uc548\ud14c\ub098.",
-    "site": "ham.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 24/1/5, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc758\ud559\u00b7\ubcf4\uac74\uacfc \uc758\ub8cc \uad00\ub828 \uacfc\ud559.",
-    "site": "health.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc131\uc11c \ubcf8\ubb38\uc758 \ud574\uc11d\uacfc \uc8fc\uc11d.",
-    "site": "hermeneutics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 22/4/4, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud78c\ub450\uad50 \uacbd\uc804\u00b7\uc2e0\uc559\u00b7\uc2e4\ucc9c.",
-    "site": "hinduism.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/0/4, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc5ed\uc0ac\uc801 \uc0ac\uac74\uacfc \uc0ac\ub8cc.",
-    "site": "history.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uacfc\ud559\u00b7\uc218\ud559\uc758 \uc5ed\uc0ac\uc640 \uac1c\ub150\uc758 \uae30\uc6d0.",
-    "site": "hsm.stackexchange.com"
-  },
-  {
     "group": "B",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 1/28/1, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub300\uc778\uad00\uacc4\uc640 \uc758\uc0ac\uc18c\ud1b5.",
     "site": "interpersonal.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 24/2/4, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 IoT \uc13c\uc11c\u00b7\ub124\ud2b8\uc6cc\ud06c\u00b7\uc81c\uc5b4 \uc7a5\ube44.",
-    "site": "iot.stackexchange.com"
   },
   {
     "group": "A",
@@ -311,98 +56,13 @@
   },
   {
     "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc77c\ubcf8\uc5b4 \ud504\ub85c\uadf8\ub798\ubc0d\u00b7\uc18c\ud504\ud2b8\uc6e8\uc5b4 \uac1c\ubc1c.",
-    "site": "ja.stackoverflow.com"
-  },
-  {
-    "group": "A",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc77c\ubcf8\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
     "site": "japanese.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Joomla \uac1c\ubc1c\u00b7\uc124\uc815\u00b7\uc6b4\uc601.",
-    "site": "joomla.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc720\ub300\uad50 \uc728\ubc95\u00b7\uc804\ud1b5\u00b7\uc2e4\ucc9c.",
-    "site": "judaism.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub77c\ud2f4\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
-    "site": "latin.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 22/5/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubc95\uacfc \ubc95\uc801 \uc808\ucc28.",
-    "site": "law.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/0/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc5b8\uc5b4\ud559 \uc774\ub860\uacfc \uc5b8\uc5b4 \ud604\uc0c1.",
-    "site": "linguistics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/1/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubb38\ud559 \uc791\ud488\uacfc \ud574\uc11d.",
-    "site": "literature.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Magento \uc804\uc790\uc0c1\uac70\ub798 \ud50c\ub7ab\ud3fc\uc758 \uc0ac\uc6a9\uacfc \uc6b4\uc601.",
-    "site": "magento.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc218\ud559 \uac1c\ub150\uacfc \ubb38\uc81c \ud480\uc774.",
-    "site": "math.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Wolfram Mathematica \uc0ac\uc6a9\uacfc \ud504\ub85c\uadf8\ub798\ubc0d.",
-    "site": "mathematica.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/1/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc804\ubb38 \uc218\ud559 \uc5f0\uad6c.",
-    "site": "mathoverflow.net"
   },
   {
     "group": "B",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 3/27/0, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc790\ub3d9\ucc28\u00b7\ud2b8\ub7ed\u00b7\uc624\ud1a0\ubc14\uc774 \uc815\ube44\uc640 \uc218\ub9ac.",
     "site": "mechanics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Monero \uc0ac\uc6a9\uacfc \ud504\ub85c\ud1a0\ucf5c \uac1c\ubc1c.",
-    "site": "monero.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc601\ud654\uc640 TV \uc791\ud488.",
-    "site": "movies.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 21/6/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc74c\uc545 \uc774\ub860\u00b7\uc5f0\uc8fc\u00b7\uc791\uace1.",
-    "site": "music.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/2/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ucef4\ud4e8\ud130 \ub124\ud2b8\uc6cc\ud06c \uc124\uacc4\uc640 \uc6b4\uc601.",
-    "site": "networkengineering.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/1/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uacf5\uac1c \ub370\uc774\ud130 \ud0d0\uc0c9\uacfc \ud65c\uc6a9.",
-    "site": "opendata.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/2/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc624\ud508\uc18c\uc2a4 \ud504\ub85c\uc81d\ud2b8 \uc6b4\uc601\uacfc \ub77c\uc774\uc120\uc2a4.",
-    "site": "opensource.stackexchange.com"
   },
   {
     "group": "B",
@@ -415,24 +75,9 @@
     "site": "parenting.stackexchange.com"
   },
   {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 23/4/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud2b9\ud5c8 \uc81c\ub3c4\uc640 \uc808\ucc28.",
-    "site": "patents.stackexchange.com"
-  },
-  {
     "group": "B",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 1/25/4, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubc18\ub824\ub3d9\ubb3c \ub3cc\ubd04\u00b7\uac74\uac15\u00b7\ud589\ub3d9.",
     "site": "pets.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/0/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc9c0\uc2dd\u00b7\uc874\uc7ac\u00b7\ud604\uc2e4\uc5d0 \uad00\ud55c \ucca0\ud559.",
-    "site": "philosophy.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\ub2f4\ub2f9\uc790 \uc870\uc815 A/B/C 21/7/2, C \u2192 A. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc0ac\uc9c4 \ucd2c\uc601\u00b7\uad11\ud559\u00b7\uc7a5\ube44\u00b7\ud6c4\ucc98\ub9ac.",
-    "site": "photo.stackexchange.com"
   },
   {
     "group": "A",
@@ -441,83 +86,8 @@
   },
   {
     "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 24/0/6, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc815\ubd80\u00b7\uc815\ucc45\u00b7\uc815\uce58 \uacfc\uc815.",
-    "site": "politics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud3ec\ub974\ud22c\uac08\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
-    "site": "portuguese.stackexchange.com"
-  },
-  {
-    "group": "A",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud3ec\ub974\ud22c\uac08\uc5b4 \ud504\ub85c\uadf8\ub798\ubc0d\u00b7\uc18c\ud504\ud2b8\uc6e8\uc5b4 \uac1c\ubc1c.",
     "site": "pt.stackoverflow.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud37c\uc990 \uc81c\uc791\uacfc \ud480\uc774.",
-    "site": "puzzling.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/1/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud000\ud2b8 \uae08\uc735\uacfc \uae08\uc735 \ubaa8\ub378\ub9c1.",
-    "site": "quant.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc591\uc790\ucef4\ud4e8\ud305 \uc774\ub860\uacfc \uad6c\ud604.",
-    "site": "quantumcomputing.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 23/7/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Raspberry Pi \ud558\ub4dc\uc6e8\uc5b4\u00b7\uc18c\ud504\ud2b8\uc6e8\uc5b4.",
-    "site": "raspberrypi.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/2/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uad6c\ud615 \ucef4\ud4e8\ud130\uc640 \uac8c\uc784 \uc2dc\uc2a4\ud15c \ubcf5\uc6d0\u00b7\uc0ac\uc6a9.",
-    "site": "retrocomputing.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc2dc\uc2a4\ud15c \uad6c\uc870\u00b7\ub3d9\uc791 \ubd84\uc11d\uacfc \uc5ed\uacf5\ud559.",
-    "site": "reverseengineering.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/2/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub85c\ubd07 \uc124\uacc4\u00b7\uc81c\uc5b4\u00b7\uac1c\ubc1c.",
-    "site": "robotics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 22/5/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud14c\uc774\ube14\ud1b1 \uc5ed\ud560\uc218\ud589 \uac8c\uc784\uacfc \uc9c4\ud589.",
-    "site": "rpg.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub7ec\uc2dc\uc544\uc5b4 \ud504\ub85c\uadf8\ub798\ubc0d\u00b7\uc18c\ud504\ud2b8\uc6e8\uc5b4 \uac1c\ubc1c.",
-    "site": "ru.stackoverflow.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub7ec\uc2dc\uc544\uc5b4\uad8c\uc758 \ub7ec\uc2dc\uc544\uc5b4 \ubb38\ubc95\uacfc \uc6a9\ubc95 \ud1a0\ub860.",
-    "site": "rus.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub7ec\uc2dc\uc544\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
-    "site": "russian.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Salesforce \uc124\uc815\u00b7\uac1c\ubc1c\u00b7\uc6b4\uc601.",
-    "site": "salesforce.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uacfc\ud559 \ubb38\uc81c\uc758 \uc218\uce58\ud574\uc11d\uacfc \uacc4\uc0b0 \uae30\ubc95.",
-    "site": "scicomp.stackexchange.com"
   },
   {
     "group": "A",
@@ -531,86 +101,6 @@
   },
   {
     "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc11c\ubc84\u00b7\uc2dc\uc2a4\ud15c\u00b7\ub124\ud2b8\uc6cc\ud06c \uc6b4\uc601.",
-    "site": "serverfault.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 SharePoint \uc124\uc815\uacfc \uc0ac\uc6a9.",
-    "site": "sharepoint.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Sitecore CMS\uc640 \ub514\uc9c0\ud138 \ub9c8\ucf00\ud305 \ub3c4\uad6c.",
-    "site": "sitecore.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc8fc\uc7a5\uc758 \uc99d\uac70\uc640 \uacfc\ud559\uc801 \uac80\uc99d.",
-    "site": "skeptics.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc18c\ud504\ud2b8\uc6e8\uc5b4 \uc124\uacc4\uc640 \uac1c\ubc1c \ud504\ub85c\uc138\uc2a4.",
-    "site": "softwareengineering.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 26/1/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc6a9\ub3c4\ubcc4 \uc18c\ud504\ud2b8\uc6e8\uc5b4 \ucd94\ucc9c.",
-    "site": "softwarerecs.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc6b0\uc8fc \ud0d0\uc0ac\uc640 \uc6b0\uc8fc\uc120 \uc6b4\uc601\u00b7\uacf5\ud559.",
-    "site": "space.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/1/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc2a4\ud398\uc778\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
-    "site": "spanish.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 25/2/3, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uac1c\uc778\u00b7\ud300 \uc2a4\ud3ec\uce20\uc758 \uacbd\uae30\uc640 \uaddc\uce59.",
-    "site": "sports.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/1/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc18c\ud504\ud2b8\uc6e8\uc5b4 \ud488\uc9c8 \uad00\ub9ac\u00b7\ud14c\uc2a4\ud2b8 \uc790\ub3d9\ud654.",
-    "site": "sqa.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud1b5\uacc4\ud559\u00b7\uba38\uc2e0\ub7ec\ub2dd\u00b7\ub370\uc774\ud130 \ubd84\uc11d.",
-    "site": "stats.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/1/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 PC \ud558\ub4dc\uc6e8\uc5b4\u00b7\uc6b4\uc601\uccb4\uc81c\u00b7\uc751\uc6a9 \ud504\ub85c\uadf8\ub7a8 \uc0ac\uc6a9.",
-    "site": "superuser.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 TeX\u00b7LaTeX\uc640 \ubb38\uc11c \uc870\ud310.",
-    "site": "tex.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/0/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Tor \uc775\uba85 \ud1b5\uc2e0\uc758 \uc0ac\uc6a9\u00b7\uac1c\ubc1c.",
-    "site": "tor.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 21/7/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc5ec\ud589 \uc774\ub3d9\u00b7\uad50\ud1b5\u00b7\uc785\uad6d \uc808\ucc28.",
-    "site": "travel.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Tridion \ucf58\ud150\uce20 \uad00\ub9ac \uc2dc\uc2a4\ud15c\uc758 \uac1c\ubc1c\uacfc \uc6b4\uc601.",
-    "site": "tridion.stackexchange.com"
-  },
-  {
-    "group": "A",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Linux\u00b7FreeBSD \ub4f1 \uc720\ub2c9\uc2a4 \uacc4\uc5f4 \uc2dc\uc2a4\ud15c.",
     "site": "unix.stackexchange.com"
   },
@@ -620,29 +110,9 @@
     "site": "ux.stackexchange.com"
   },
   {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 vi\u00b7Vim \uc0ac\uc6a9\uacfc \uc124\uc815.",
-    "site": "vi.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/1/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc6f9 \uc560\ud50c\ub9ac\ucf00\uc774\uc158 \uc0ac\uc6a9.",
-    "site": "webapps.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc6f9\uc0ac\uc774\ud2b8 \uc6b4\uc601\uacfc \uad00\ub9ac.",
-    "site": "webmasters.stackexchange.com"
-  },
-  {
     "group": "B",
     "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 3/26/1, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubaa9\uc7ac \uac00\uacf5\u00b7\uc870\ub9bd\u00b7\ub9c8\uac10.",
     "site": "woodworking.stackexchange.com"
-  },
-  {
-    "group": "A",
-    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 WordPress \uac1c\ubc1c\u00b7\uc124\uc815\u00b7\uc6b4\uc601.",
-    "site": "wordpress.stackexchange.com"
   },
   {
     "group": "B",

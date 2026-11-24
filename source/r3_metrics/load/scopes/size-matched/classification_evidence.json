@@ -1,0 +1,122 @@
+[
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 CiviCRM \uc124\uc815\uacfc \uc6b4\uc601.",
+    "site": "civicrm.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 2/25/3, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubbf8\uc220\u00b7\uacf5\uc608\uc758 \uc7ac\ub8cc\uc640 \uc81c\uc791 \uae30\ubc95.",
+    "site": "crafts.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\ub2f4\ub2f9\uc790 \uc870\uc815 A/B/C 6/22/2, B \uc720\uc9c0. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc8fc\ud0dd \uc218\ub9ac\u00b7\ubc30\uc120\u00b7\ubc30\uad00\u00b7\uc2dc\uacf5.",
+    "site": "diy.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 elementary OS\uc640 \uad00\ub828 \uc571\uc758 \uc0ac\uc6a9\u00b7\uac1c\ubc1c.",
+    "site": "elementaryos.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/0/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 EOS.IO \ube14\ub85d\uccb4\uc778\uacfc \ubd84\uc0b0 \uc571 \uac1c\ubc1c.",
+    "site": "eosio.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\ub2f4\ub2f9\uc790 \uc870\uc815 A/B/C 8/21/1, B \uc720\uc9c0. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc6b4\ub3d9 \uc218\ud589\u00b7\ud6c8\ub828\u00b7\uccb4\ub825 \uad00\ub9ac.",
+    "site": "fitness.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 27/1/2, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud504\ub791\uc2a4\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
+    "site": "french.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 3/25/2, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc2dd\ubb3c \uc7ac\ubc30\u00b7\uad00\ub9ac\uc640 \uc870\uacbd.",
+    "site": "gardening.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 1/28/1, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub300\uc778\uad00\uacc4\uc640 \uc758\uc0ac\uc18c\ud1b5.",
+    "site": "interpersonal.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Joomla \uac1c\ubc1c\u00b7\uc124\uc815\u00b7\uc6b4\uc601.",
+    "site": "joomla.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Wolfram Mathematica \uc0ac\uc6a9\uacfc \ud504\ub85c\uadf8\ub798\ubc0d.",
+    "site": "mathematica.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 3/27/0, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc790\ub3d9\ucc28\u00b7\ud2b8\ub7ed\u00b7\uc624\ud1a0\ubc14\uc774 \uc815\ube44\uc640 \uc218\ub9ac.",
+    "site": "mechanics.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 29/1/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uacf5\uac1c \ub370\uc774\ud130 \ud0d0\uc0c9\uacfc \ud65c\uc6a9.",
+    "site": "opendata.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\ub2f4\ub2f9\uc790 \uc870\uc815 A/B/C 7/21/2, C \u2192 B. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub4f1\ubc18\u00b7\uc57c\uc601\u00b7\uc57c\uc678 \ud65c\ub3d9 \uae30\uc220\uacfc \uc7a5\ube44.",
+    "site": "outdoors.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 1/26/3, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc721\uc544\uc640 \uc544\ub3d9\uc758 \ud589\ub3d9\u00b7\ubc1c\ub2ec.",
+    "site": "parenting.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 1/25/4, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubc18\ub824\ub3d9\ubb3c \ub3cc\ubd04\u00b7\uac74\uac15\u00b7\ud589\ub3d9.",
+    "site": "pets.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/1/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ud000\ud2b8 \uae08\uc735\uacfc \uae08\uc735 \ubaa8\ub378\ub9c1.",
+    "site": "quant.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ub7ec\uc2dc\uc544\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
+    "site": "russian.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 30/0/0, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 Sitecore CMS\uc640 \ub514\uc9c0\ud138 \ub9c8\ucf00\ud305 \ub3c4\uad6c.",
+    "site": "sitecore.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/1/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc2a4\ud398\uc778\uc5b4 \ubb38\ubc95\u00b7\ud45c\ud604\u00b7\uc6a9\ubc95.",
+    "site": "spanish.stackexchange.com"
+  },
+  {
+    "group": "A",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 28/1/1, A \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc18c\ud504\ud2b8\uc6e8\uc5b4 \ud488\uc9c8 \uad00\ub9ac\u00b7\ud14c\uc2a4\ud2b8 \uc790\ub3d9\ud654.",
+    "site": "sqa.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 3/25/2, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc0ac\uc6a9\uc790 \uacbd\ud5d8 \uc870\uc0ac\uc640 \uc778\ud130\ud398\uc774\uc2a4 \uc124\uacc4.",
+    "site": "ux.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 3/26/1, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \ubaa9\uc7ac \uac00\uacf5\u00b7\uc870\ub9bd\u00b7\ub9c8\uac10.",
+    "site": "woodworking.stackexchange.com"
+  },
+  {
+    "group": "B",
+    "reason": "\uae30\uc874 \ub3d9\uacb0 A/B/C 2/27/1, B \ud310\uc815. \uc8fc\uc694 \uc8fc\uc81c\ub294 \uc9c1\uc7a5 \ub0b4 \uad00\uacc4\u00b7\ucc44\uc6a9\u00b7\uc5c5\ubb34 \uc0c1\ud669.",
+    "site": "workplace.stackexchange.com"
+  }
+]

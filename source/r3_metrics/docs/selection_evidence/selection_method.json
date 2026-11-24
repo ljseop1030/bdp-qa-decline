@@ -1,0 +1,30 @@
+{
+  "version": "a90-category-rank-midpoint-v1",
+  "baseline": "2022-01 through 2022-10 inclusive",
+  "order": [
+    "a_count descending (30 questions per site)",
+    "baseline questions descending",
+    "hostname ascending for exact ties"
+  ],
+  "threshold": "A >= 27 of 30",
+  "allocation": "largest remainder from original A118 official-category frequencies; no minimum category quota",
+  "segment": "zero-based boundaries floor(j*n/k), floor((j+1)*n/k); end exclusive",
+  "midpoint": "start + floor((segment_length-1)/2); earlier middle for even length",
+  "category_quota": {
+    "technology": 6,
+    "culturerecreation": 3,
+    "science": 2,
+    "lifearts": 1,
+    "professional": 0,
+    "business": 0,
+    "uncategorized": 0
+  },
+  "full_category_denominator": "146 eligible main sites, including A/B/C; excludes English SO and meta",
+  "category_source": "https://stackexchange.com/sites?view=list",
+  "category_date": "2026-11-24",
+  "writers_alias_source": "https://writing.meta.stackexchange.com/questions/1463/this-site-is-now-writing",
+  "monthly_source": "outputs\\local130\\local130-20261122-03\\site_metrics_monthly.csv",
+  "monthly_sha256": "def56a378f86c64fbd60c0538f82825a4868a3e4f3d3849b5f06aaeb9b1bbe32",
+  "balance_diagnostics_used_for_reselection": false,
+  "runtime": "existing local130 output; VM full completion not claimed"
+}

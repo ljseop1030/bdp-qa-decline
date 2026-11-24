@@ -1,0 +1,14 @@
+{
+  "status": "comparison only; main selection unchanged",
+  "candidate_count": 85,
+  "threshold": "A >=27 of 30",
+  "category_quota": false,
+  "matching_metric": "2022 Jan-Oct question count only",
+  "objective": "minimize sum of squared differences in log1p(question count)",
+  "algorithm": "scipy.optimize.linear_sum_assignment; sorted hostnames as input",
+  "scipy_version": "1.16.1",
+  "matching": "one-to-one, without replacement; no maximum distance/caliper; 12 B sites to 85 eligible A sites",
+  "annual_and_accounts_used_in_matching": false,
+  "total_matching_cost": 0.365422210598692,
+  "main_sha256": "01b2deda003de7b4e4fa61f46349c73a1335b770cd1f47aac4a731f081297f24"
+}

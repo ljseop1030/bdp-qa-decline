@@ -6,4 +6,4 @@
 
 양측 순위합 검정은 동점의 평균 순위를 두 배 정수로 표현하고 작은 군의 순위합 분포를 동적계획법으로 정확 계산합니다. p=min(1,2*min(양쪽 포함 꼬리 확률))이며 군 크기와 동점 다중도를 유지합니다. 모든 조합을 직접 열거하거나 몬테카를로 근사하지 않습니다. 소규모 사례의 직접 열거와 비교 검증합니다. Cliff delta와 한 사이트 제외 중앙값 차이 범위도 제공합니다. 인과효과나 중앙값만의 검정으로 해석하지 않습니다.
 
-범위는 team-adjudicated-130-v1, A118/B12입니다. ham/photo는 A, outdoors는 B, islam은 제외합니다. 기존 로컬 지표의 분자·분모는 재사용 가능하며 군별 결과는 새 라벨로 산출합니다. classification_source.md와 classification_evidence.json에 근거를 보존합니다.
+분류의 기준 모집단은 team-adjudicated-130-v1, A118/B12입니다. v0.3 기본 분석 범위는 a90-category-rank-midpoint-v1(A12/B12), 비교 대안은 a90-question-size-matched-v1(A12/B12)입니다. 이전 130사이트는 legacy130 프로필로 보존합니다. 구체적인 선정 기준과 한계는 SELECTION_SCOPES_KO.md를 참고하세요. 기존 로컬 지표의 분자·분모는 재사용 가능하나 군별 통계는 선택한 프로필의 사이트만으로 다시 계산합니다. 프로필마다 분류 근거와 목록 해시를 보존합니다.

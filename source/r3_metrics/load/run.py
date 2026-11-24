@@ -9,7 +9,7 @@ import os
 import re
 import subprocess
 import sys
-from common import (ROOT, TABLES, load_scope, capture, check_paths, check_status, digest,
+from common import (ROOT, TABLES, load_config, load_scope, capture, check_paths, check_status, digest,
                     read_json, validate_monthly, write_json, write_text)
 from report import generate
 
@@ -92,6 +92,11 @@ def implementation_hashes():
     for name in sorted(os.listdir(ROOT)):
         if name.endswith(('.py', '.sql', '.json', '.sh', '.txt')) and name != 'SHA256SUMS.txt':
             result[name] = digest(os.path.join(ROOT, name))
+    for base, dirs, files in os.walk(os.path.join(ROOT, 'scopes')):
+        for name in sorted(files):
+            if name.endswith(('.json', '.txt')):
+                path = os.path.join(base, name)
+                result[os.path.relpath(path, ROOT).replace(os.sep, '/')] = digest(path)
     result['spark-conf/spark-env.sh'] = digest(os.path.join(ROOT, 'spark-conf', 'spark-env.sh'))
     for name in sorted(os.listdir(os.path.join(os.path.dirname(ROOT), 'sql'))):
         if name.endswith('.sql'):
@@ -166,11 +171,11 @@ def spark(task, local, args):
 
 def run(args):
     resolve_paths(args)
-    config = read_json(os.path.join(ROOT, 'config.json'))
+    config = load_config(getattr(args, 'scope', 'category'))
     frozen = load_scope(config)
     if (config['coverage_end_exclusive'], config['answer_window_days'], config['r1_parser_version'], config['r1_dump_date']) != (
             '2024-03-01T00:00:00Z', 7, 'v0.3', '2024-04-02'):
-        raise ValueError('v0.2 has a fixed metric contract; changing it requires a new package version')
+        raise ValueError('Metric contract is fixed; changing it requires a new package version')
     selected = args.site or sorted(frozen)
     if len(set(selected)) != len(selected) or any(s not in frozen for s in selected):
         raise ValueError('--site must name a unique site from selected_sites.json; meta is excluded')
@@ -251,7 +256,7 @@ def run(args):
         write_json(candidate, receipt)
         capture(['hdfs', 'dfs', '-put', candidate, args.output_root + '/_R3_SUCCESS.json'])
         os.rename(candidate, os.path.join(local, 'validated.json'))
-        print('OVERALL PASS (%s): %d rows. %s' % ('FULL SCOPE 130' if full else 'SUBSET ONLY', len(rows), local))
+        print('OVERALL PASS (%s): %d rows. %s' % (('FULL SCOPE %d' % len(frozen)) if full else 'SUBSET ONLY', len(rows), local))
     except Exception as exc:
         write_json(os.path.join(local, 'failure.json'), {'complete': False, 'error': str(exc), 'passed_sites': summary})
         write_json(os.path.join(args.log_dir, 'failure.json'), {'complete': False, 'error': str(exc), 'passed_sites': summary})
@@ -260,6 +265,7 @@ def run(args):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--scope', default='category', help='Scope profile under load/scopes/: category (default), size-matched, legacy130')
     p.add_argument('--input-mode', choices=('parquet', 'hive'), default='hive')
     p.add_argument('--hive-database', default='qa_decline')
     p.add_argument('--hive-conf-dir', default=os.environ.get('HIVE_CONF_DIR', '/etc/hive/conf'),
@@ -272,7 +278,7 @@ def main():
     p.add_argument('--output-root', help='Override exact HDFS output; default /project/statistics/<run-id>')
     p.add_argument('--local-output', help='Override exact local output; default <work-root>/<run-id>')
     p.add_argument('--driver-memory', default='768m')
-    p.add_argument('--site', action='append', help='Optional frozen main site; omit for all 130')
+    p.add_argument('--site', action='append', help='Optional frozen main site; omit for all sites in the chosen scope')
     p.add_argument('--preflight', action='store_true')
     p.add_argument('--dry-run', action='store_true')
     args = p.parse_args()

@@ -106,16 +106,29 @@ class Completion(unittest.TestCase):
         runner.run(self.args)
         result = read_json(os.path.join(self.args.local_output, 'validated.json'))
         self.assertTrue(result['full_scope'])
-        self.assertEqual(result['rows'], 8190)
+        self.assertEqual(result['rows'], 1512)
         self.assertFalse(result['full_pilot'])
-        self.assertEqual(result['target_sites'], 130)
-        self.assertEqual(result['scope_id'], 'team-adjudicated-130-v1')
+        self.assertEqual(result['target_sites'], 24)
+        self.assertEqual(result['scope_id'], 'a90-category-rank-midpoint-v1')
         self.assertEqual(self.commands[-1][-1], '/project/r3/run-001/_R3_SUCCESS.json')
+
+    def test_size_matched_scope_completion(self):
+        from common import load_config, load_scope
+        self.args.scope = 'size-matched'
+        sites = load_scope(load_config('size-matched'))
+        statuses = dict((s, {}) for s in sites)
+        runner.preflight = lambda args, sites: (statuses, {'snapshot': 'before'}, 'simulated')
+        runner.run(self.args)
+        result = read_json(os.path.join(self.args.local_output, 'validated.json'))
+        self.assertTrue(result['full_scope'])
+        self.assertEqual(result['sites'], sites)
+        self.assertEqual(result['rows'], 1512)
+        self.assertEqual(result['scope_id'], 'a90-question-size-matched-v1')
 
     def test_hive_mode_reaches_tasks_and_receipts(self):
         self.args.input_mode = 'hive'
         self.args.hive_database = 'qa_decline'
-        self.args.site = ['cs.stackexchange.com']
+        self.args.site = ['civicrm.stackexchange.com']
         original = runner.spark
         tasks = []
         def spark(task, local, args):
@@ -155,25 +168,29 @@ class Completion(unittest.TestCase):
             runner.subprocess.Popen = original
 
     def test_subset_does_not_publish_ab_inference(self):
-        self.args.site = ['cs.stackexchange.com']
+        self.args.site = ['civicrm.stackexchange.com']
         runner.run(self.args)
         result = read_json(os.path.join(self.args.local_output, 'validated.json'))
         self.assertFalse(result['full_scope'])
         self.assertFalse(os.path.exists(os.path.join(self.args.local_output, 'statistical_tests.json')))
 
-    def test_old_ten_site_subset_is_not_scope_completion(self):
-        self.args.site = ['craftcms', 'cs', 'drupal', 'emacs', 'gardening',
-                          'interpersonal', 'parenting', 'pets', 'vi', 'woodworking']
-        self.args.site = [s + '.stackexchange.com' for s in self.args.site]
+    def test_ten_site_subset_is_not_scope_completion(self):
+        self.args.site = sorted(self.sites)[:10]
         runner.run(self.args)
         result = read_json(os.path.join(self.args.local_output, 'validated.json'))
         self.assertFalse(result['full_scope'])
         self.assertEqual(result['rows'], 630)
-        self.assertEqual(result['expected_rows'], 8190)
+        self.assertEqual(result['expected_rows'], 1512)
         self.assertFalse(os.path.exists(os.path.join(self.args.local_output, 'statistical_tests.json')))
 
-    def test_changed_r1_snapshot_prevents_completion(self):
+    def test_site_outside_chosen_scope_is_rejected(self):
         self.args.site = ['cs.stackexchange.com']
+        with self.assertRaises(ValueError):
+            runner.run(self.args)
+        self.assertFalse(os.path.exists(self.args.local_output))
+
+    def test_changed_r1_snapshot_prevents_completion(self):
+        self.args.site = ['civicrm.stackexchange.com']
         runner.status_snapshot = lambda source, sites, input_mode='parquet': ({}, {'snapshot': 'changed'})
         with self.assertRaises(ValueError):
             runner.run(self.args)
@@ -182,7 +199,7 @@ class Completion(unittest.TestCase):
         self.assertFalse(any('-put' in c for c in self.commands))
 
     def test_job_without_success_receipt_fails(self):
-        self.args.site = ['cs.stackexchange.com']
+        self.args.site = ['civicrm.stackexchange.com']
         runner.spark = lambda *args: None
         with self.assertRaises(IOError):
             runner.run(self.args)

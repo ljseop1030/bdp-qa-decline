@@ -7,22 +7,56 @@ import sys
 import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'load'))
-from common import load_scope, read_json, ROOT
+from common import load_scope, load_config, read_json, validate_monthly, ROOT
 from report import rank_test
 
 
 class ApprovedScope(unittest.TestCase):
+    def test_active_files_match_category_snapshot(self):
+        for name in ('selected_sites.json', 'classification_evidence.json'):
+            self.assertEqual(read_json(os.path.join(ROOT, name)),
+                             read_json(os.path.join(ROOT, 'scopes', 'category', name)))
+
     def test_scope_membership_and_adjusted_labels(self):
         sites = load_scope()
-        self.assertEqual(len(sites), 130)
-        self.assertEqual(list(sites.values()).count('A'), 118)
+        self.assertEqual(len(sites), 24)
+        self.assertEqual(list(sites.values()).count('A'), 12)
         self.assertEqual(list(sites.values()).count('B'), 12)
-        for site, group in [('ham', 'A'), ('photo', 'A'), ('outdoors', 'B'), ('diy', 'B')]:
+        for site, group in [('unix', 'A'), ('physics', 'A'), ('outdoors', 'B'), ('diy', 'B')]:
             self.assertEqual(sites[site + '.stackexchange.com'], group)
         for site in ['islam.stackexchange.com', 'stackoverflow.com', 'meta.stackexchange.com']:
             self.assertNotIn(site, sites)
-        self.assertIn('askubuntu.com', sites)
-        self.assertIn('serverfault.com', sites)
+        self.assertIn('pt.stackoverflow.com', sites)
+        self.assertNotIn('askubuntu.com', sites)
+
+    def test_named_profiles_and_unchanged_b_group(self):
+        primary = load_scope()
+        for name, expected in [('size-matched', 24), ('legacy130', 130)]:
+            config = load_config(name)
+            sites = load_scope(config)
+            self.assertEqual(len(sites), expected)
+            self.assertEqual(config['expected_rows'], expected * 63)
+            self.assertEqual(sorted(s for s in sites if sites[s] == 'B'),
+                             sorted(s for s in primary if primary[s] == 'B'))
+        matched = load_scope(load_config('size-matched'))
+        self.assertIn('mathematica.stackexchange.com', matched)
+        self.assertNotIn('physics.stackexchange.com', matched)
+
+    def test_unknown_profile_and_unsafe_paths_fail(self):
+        for name in ('../category', 'no-such-profile'):
+            with self.assertRaises((ValueError, IOError)):
+                load_config(name)
+        config = dict(load_config(), selection_file='../selected_sites.json')
+        with self.assertRaises(ValueError):
+            load_scope(config)
+
+    def test_both_profiles_have_complete_local_reference_data(self):
+        reference = read_json(os.path.join(os.path.dirname(ROOT), 'tests', 'scope_reference_audit.json'))
+        for name in ('category', 'size-matched'):
+            sites = load_scope(load_config(name))
+            rows = validate_monthly([r for r in reference if r['site'] in sites], sites)
+            self.assertEqual(len(rows), 1512)
+            self.assertEqual(set(r['site'] for r in rows), set(sites))
 
     def test_changed_selection_hash_or_completion_target_is_rejected(self):
         config = read_json(os.path.join(ROOT, 'config.json'))

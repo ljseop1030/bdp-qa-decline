@@ -242,7 +242,7 @@ def generate(rows, sites, dest, full_scope):
     plot_svg(os.path.join(charts, 'ab_monthly.svg'), 'R3 A/B monthly trends', panels)
     csv_file(os.path.join(dest, 'group_monthly.csv'), group_rows, ['group', 'month', 'metric', 'median', 'valid_sites', 'target_sites'])
     notes = ['# R3 월별 지표와 Q1 분석', '',
-             '대상: 본 사이트 %d개. meta 제외. %s' % (len(sites), '전체 A/B 130사이트 범위.' if full_scope else '**부분 실행: 전체 A/B 검정은 수행하지 않았습니다.**'), '',
+             '대상: 본 사이트 %d개. meta 제외. %s' % (len(sites), ('선택한 A/B %d사이트 범위 전체.' % len(sites)) if full_scope else '**부분 실행: 전체 A/B 검정은 수행하지 않았습니다.**'), '',
              '2019-01~2024-03의 월별 행을 보존합니다. 건수·투표는 2024-02까지, 7일 답변률은 2024-01까지 유효합니다. '
              '2024-03-01 UTC는 보수적 운영 가정이며, R1 dump_date가 역사적 자료의 완전성을 인증하지 않습니다.', '',
              'Community(id=-1) 제외. 비율 분모 0은 NULL. 답변창은 0~604800초 양끝 포함이며 질문–답변은 site와 id로 연결합니다. '

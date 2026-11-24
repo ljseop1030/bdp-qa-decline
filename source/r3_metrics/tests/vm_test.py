@@ -18,7 +18,6 @@ from run import exists_hdfs
 
 RATIO_FIELDS = ('answered_rate', 'downvote_ratio')
 TOLERANCE = 1e-12
-TRIAL_SITE = 'cs.stackexchange.com'
 
 
 def timestamp():
@@ -110,7 +109,7 @@ def save_report(root, report):
                   '시험·전체 실행의 R1 상태와 결과 해시는 각 실행의 `validated.json`에 있습니다.',
                   '값 대조는 지정한 기준 결과와의 일치 여부를 확인합니다. 원본 덤프 동일성은 파일 해시가 있어야 확인할 수 있습니다.'])
     if os.path.isfile(os.path.join(root, 'full', 'validated.json')):
-        lines.extend(['', '[130사이트 통계 보고서](full/REPORT_KO.md)'])
+        lines.extend(['', '[선택 범위 전체 통계 보고서](full/REPORT_KO.md)'])
     if report.get('failed_stage'):
         lines.extend(['', '실패 단계 `%s`. 위 단계 로그 끝의 오류와 해당 Spark 로그를 확인하세요.' %
                       report['failed_stage']])
@@ -131,14 +130,20 @@ def experiment(args, root, hdfs_run):
         log_command(stage, ['sha256sum', '-c', 'SHA256SUMS.txt'], os.path.dirname(ROOT), log)
         if sys.version_info[:2] != (2, 7):
             raise ValueError('Expected Python 2.7. Set R3_PYTHON to the interpreter used by R1.')
-        from common import load_scope
-        sites = load_scope()
-        if len(sites) != 130 or TRIAL_SITE not in sites:
-            raise ValueError('Expected the approved 130-site scope')
+        from common import load_config, load_scope
+        config = load_config(getattr(args, 'scope', 'category'))
+        sites = load_scope(config)
+        trial_site = getattr(args, 'trial_site', None) or sorted(s for s in sites if sites[s] == 'A')[0]
+        if trial_site not in sites:
+            raise ValueError('Trial site missing from scope: ' + trial_site)
+        state['trial_site'] = trial_site
+        report['scope_id'] = config['scope_id']
+        report['target_sites'] = len(sites)
         state['sites'] = sites
-        state['trial_sites'] = {TRIAL_SITE: sites[TRIAL_SITE]}
+        state['trial_sites'] = {trial_site: sites[trial_site]}
         baseline = os.path.join(os.path.dirname(ROOT), 'tests', 'scope_reference_audit.json')
-        state['reference'] = checked_rows(read_json(baseline), sites)
+        reference = [row for row in read_json(baseline) if row['site'] in sites]
+        state['reference'] = checked_rows(reference, sites)
         report['reference_sha256'] = digest(baseline)
         if exists_hdfs(hdfs_run):
             raise ValueError('HDFS run already exists. Choose a new --run-id: ' + hdfs_run)
@@ -153,13 +158,13 @@ def experiment(args, root, hdfs_run):
                 raise ValueError('Missing SMOKE PASS marker')
 
     def run_r3(stage, log, name, sites, mode, full=False):
-        command = ['bash', os.path.join(ROOT, 'run_r3.sh'), '--input-mode', mode,
+        command = ['bash', os.path.join(ROOT, 'run_r3.sh'), '--scope', getattr(args, 'scope', 'category'), '--input-mode', mode,
                    '--hive-database', args.hive_database, '--input-root', args.input_root,
                    '--output-root', hdfs_run + '/' + name, '--run-id', name,
                    '--local-output', os.path.join(root, name),
                    '--log-root', os.path.join(root, 'spark_logs'), '--driver-memory', args.driver_memory]
         if not full:
-            command.extend(['--site', TRIAL_SITE])
+            command.extend(['--site', state['trial_site']])
         log_command(stage, command, root, log)
         rows, receipt = read_run(root, name, sites, mode, full)
         stage['rows'] = receipt['rows']
@@ -189,7 +194,7 @@ def experiment(args, root, hdfs_run):
         rows, hashes = run_r3(stage, log, 'hive', state['trial_sites'], 'hive')
         if hashes != state['trial_hashes']:
             raise ValueError('R1 status changed between the Parquet and Hive runs')
-        expected = [row for row in state['full_rows'] if row['site'] == TRIAL_SITE]
+        expected = [row for row in state['full_rows'] if row['site'] == state['trial_site']]
         verify(stage, log, compare(rows, expected, state['trial_sites']), 'hive_comparison.json')
 
     actions = [integrity, smoke, parquet_trial, parquet_full, local_comparison, hive_trial]
@@ -220,6 +225,8 @@ def experiment(args, root, hdfs_run):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--scope', default='category', help='Same profile as load/run_r3.sh --scope')
+    parser.add_argument('--trial-site', help='Optional site from the chosen scope; default is its first A site')
     parser.add_argument('--run-id', default='vm-test-' + datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'))
     parser.add_argument('--input-root', default='/project/parquet')
     parser.add_argument('--output-base', default='/project/statistics')
