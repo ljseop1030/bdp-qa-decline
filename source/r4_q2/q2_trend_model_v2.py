@@ -57,7 +57,7 @@ def madd(m, k):
 
 # ---------------------------------------------------------------- loading
 def load(path, sites_file, exclude):
-    if path.endswith('.parquet'):
+    if path.endswith('.parquet') or os.path.isdir(path):   # dir = Spark/Hive output folder of part files
         df = pd.read_parquet(path)
     elif path.endswith('.csv'):
         df = pd.read_csv(path, dtype={'month': str})
@@ -466,6 +466,20 @@ def group_analysis(df, fit_start, summary, log1p, n_perm, seed, loo):
 
 
 # ---------------------------------------------------------------- output
+def input_sha256(path):
+    """sha256 of the input file, or of all data files in an input folder (sorted, names included)."""
+    h = hashlib.sha256()
+    if os.path.isdir(path):
+        for n in sorted(os.listdir(path)):
+            f = os.path.join(path, n)
+            if os.path.isfile(f) and not n.startswith(('_', '.')):
+                h.update(n.encode('utf-8'))
+                h.update(open(f, 'rb').read())
+    else:
+        h.update(open(path, 'rb').read())
+    return h.hexdigest()
+
+
 def save(df, name, out):
     df.to_csv(os.path.join(out, name + '.csv'), index=False)
     try:
@@ -493,6 +507,16 @@ def main():
     a = ap.parse_args()
 
     df = load(a.input, a.sites, a.exclude_site)
+    if a.sites:   # report listed sites missing from the input, and stop if a whole group is empty
+        lst = json.load(open(a.sites))
+        lst = lst.get('sites', lst) if isinstance(lst, dict) else lst
+        missing = sorted(set(lst) - set(df.site.unique()))
+        if missing:
+            print('WARNING: %d listed site(s) not in input: %s' % (len(missing), ', '.join(missing)))
+    n_grp = df.groupby('domain_group').site.nunique().to_dict()
+    print('sites per group: A=%d, B=%d' % (n_grp.get('A', 0), n_grp.get('B', 0)))
+    if n_grp.get('A', 0) < 2 or n_grp.get('B', 0) < 2:
+        raise SystemExit('need at least 2 sites in each of groups A and B (got %s)' % n_grp)
     if df.month.min() > a.fit_start:
         raise SystemExit('input starts at %s, cannot fit from %s' % (df.month.min(), a.fit_start))
     df = df[df.month >= a.fit_start]
@@ -513,7 +537,7 @@ def main():
     bt_agg.to_csv(os.path.join(a.out, 'q2_backtest.csv'), index=False)
     bt.to_csv(os.path.join(a.out, 'q2_backtest_detail.csv'), index=False)
     meta = dict(version=VERSION, input=os.path.basename(a.input),
-                input_sha256=hashlib.sha256(open(a.input, 'rb').read()).hexdigest(),
+                input_sha256=input_sha256(a.input),
                 fit_start=a.fit_start, fit_end=FIT_END, post_start=POST_START, post_end=POST_END,
                 post_12m_end=POST_12M_END, placebo_breaks=PLACEBO_BREAKS, placebo_window=PLACEBO_WINDOW,
                 backtest_cutoffs=BACKTEST_CUTOFFS, seasonality_choice=choice, log1p=a.log1p,
