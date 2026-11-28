@@ -1,6 +1,7 @@
 #!/bin/bash
-# Smoke test for the R2 API. Usage: api_smoke.sh [base_url] [site]
-BASE=${1:-http://localhost:8100}; SITE=${2:-cs.stackexchange.com}
+# Smoke test for the R2 API. Usage: api_smoke.sh [base_url] [site] [trend_site]
+#   trend checks run only when /api/meta says trend_available=true
+BASE=${1:-http://localhost:8100}; SITE=${2:-cs.stackexchange.com}; TSITE=${3:-$SITE}
 PASS=0; FAIL=0
 check() {  # expected_status path [grep_pattern]
   local exp=$1 path=$2 pat=$3 body code t
@@ -22,6 +23,18 @@ check 400 "/api/metrics?metric=questions_count&from=2023-13" INVALID_RANGE
 check 400 "/api/metrics?metric=questions_count&sites=$(seq -s, -f 's%g.x' 1 21)" TOO_MANY_SITES
 check 404 "/api/metrics?metric=questions_count&sites=no.such.site" SITE_NOT_FOUND
 check 404 "/api/nope" NOT_FOUND
+# Q2 (R4) serving: /api/trend, /api/group_summary
+if curl -s "$BASE/api/meta" | grep -q '"trend_available": true'; then
+  check 200 "/api/trend?site=$TSITE&metric=questions_count" '"unit": "index"'
+  check 200 "/api/trend?site=$TSITE&metric=answered_rate" '"unit": "rate"'
+  check 200 "/api/trend?site=$TSITE&metric=questions_count&from=2022-12&to=2022-12" '"n_rows": 1'
+  check 400 "/api/trend?site=$TSITE&metric=nope" INVALID_METRIC
+  check 404 "/api/trend?site=no.such.site&metric=questions_count" SITE_NOT_FOUND
+  check 200 "/api/group_summary?metric=answered_rate" '"did_12m"'
+else
+  check 404 "/api/trend?site=$TSITE&metric=questions_count" NOT_FOUND
+  echo "     (trend tables not loaded: only the NOT_FOUND path was checked)"
+fi
 # CORS header
 curl -s -D - -o /dev/null "$BASE/api/meta" | grep -i '^Access-Control-Allow-Origin: \*' >/dev/null \
   && { PASS=$((PASS+1)); echo "PASS CORS header"; } || { FAIL=$((FAIL+1)); echo "FAIL CORS header"; }

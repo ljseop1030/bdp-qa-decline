@@ -6,12 +6,15 @@
 |---|---|
 | `sql/create_tables.hql` | 원천 테이블 `qa_decline.{posts,users,votes}` (site→year 파티션, EXTERNAL, LOCATION `/project/parquet/<table>`) |
 | `sql/create_serving_test.hql` | 서빙 테이블 `qa_decline.site_metrics_monthly` (LOCATION `/project/serving/site_metrics_monthly`) |
+| `sql/create_serving_q2.hql` | 서빙 테이블 `site_trend_model`·`site_trend_summary`(Parquet), `q2_group_summary`(CSV) — R4 Q2 v2 열 순서 |
 | `sql/load_serving_test_from_csv.hql` | (테스트 데이터 전용) TSV → 텍스트 테이블 → Hive가 Parquet v1로 다시 쓰기. R3 노션 첨부본이 Parquet v2라 Impala 2.2가 거부해서 사용 |
 | `load/register_partitions.py` | R1 status 기반 파티션 등록 (MSCK REPAIR 대체), SKIP/REPLACE, Impala REFRESH, 행 수 검증 |
+| `load/publish_serving.sh` | R3 결과(`_R3_SUCCESS.json` full_scope 확인) / R4 결과를 고정 서빙 경로로 교체 게시 (이전 파일은 `_prev`로 이동) + REFRESH |
 | `load/check_site.sh` | 사이트 단위 무결성 스냅샷 (행 수, 고유 id, 중복 id, 합계, 파티션 수) |
-| `api/r2_api.py` | 조회 API (포트 8100): `/api/meta`, `/api/sites`, `/api/metrics` |
+| `api/r2_api.py` | 조회 API (포트 8100): `/api/meta`, `/api/sites`, `/api/metrics`, `/api/trend`, `/api/group_summary` |
 | `api/start_api.sh`, `api/stop_api.sh` | API 기동/중지 (nohup, 로그 `/data/work/r2/logs/api.log`) |
-| `tests/api_smoke.sh` | API 엔드포인트·오류 코드·CORS 점검 |
+| `tests/api_smoke.sh` | API 엔드포인트·오류 코드·CORS 점검 (Q2 테이블이 있으면 `/api/trend`도) |
+| `tests/partition_bench.sh` | 파티션 효과 측정: 고정 쿼리 3개 × 파티션/비파티션 × Impala(+Hive), 파일 수·크기 |
 
 ## 순서
 ```bash
@@ -31,7 +34,7 @@ api/start_api.sh && tests/api_smoke.sh http://localhost:8100
 ```
 
 ## 등록 규칙 (11/21 결정)
-- status JSON이 있고 `dump_date=2024-04-02`, `parser_version=v0.3`, `years` = HDFS의 실제 `year=` 디렉터리일 때만 등록.
+- status JSON이 있고 `dump_date=2024-04-02`, `parser_version`=`--parser-version` 값(기본 v0.3, R1 v0.4-rc1 전달분은 명시), `years` = HDFS의 실제 `year=` 디렉터리일 때만 등록.
 - ledger(`/data/work/r2/ledger.json`)와 비교: 같은 `finished_at` → SKIP, 바뀌면 → REPLACE(없어진 연도 DROP, 새 연도 ADD, REFRESH). append 없음.
 - 등록 후 Impala `COUNT(*)` = status `rows`가 아니면 해당 site 파티션을 내리고 FAIL.
 - status가 없는 사이트는 건드리지 않음 (MSCK는 처리 중·중단된 디렉터리까지 등록할 수 있어서 사용하지 않음).

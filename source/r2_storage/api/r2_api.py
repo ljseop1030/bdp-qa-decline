@@ -5,10 +5,14 @@ Runs inside the course VM with the system Python 2.6 standard library only.
 Impala is queried by calling `impala-shell -B` (port 21000); no client
 library, no pip.  Also runs on Python 2.7 / 3.x (used for local tests).
 
-Endpoints (spec v0 + 11/21 decisions):
+Endpoints (spec v0 + 11/21 decisions + 11/26 Q2 serving):
   GET /api/meta
   GET /api/sites?group=A|B|C
   GET /api/metrics?metric=<m>&sites=a,b|group=A&from=YYYY-MM&to=YYYY-MM
+  GET /api/trend?site=<host>&metric=<m>[&from=YYYY-MM&to=YYYY-MM]
+      data = site_trend_model rows of the primary model, meta = its
+      site_trend_summary row (R4 Q2 v2: v1 columns + unit, is_primary, ...)
+  GET /api/group_summary?metric=<m>     (q2_group_summary, A vs B DID)
 Errors: {"error": {"code", "message"}}
   400 INVALID_METRIC / INVALID_RANGE / TOO_MANY_SITES, 404 SITE_NOT_FOUND,
   503 QUERY_FAILED  (unknown path: 404 NOT_FOUND)
@@ -47,6 +51,7 @@ METRIC_LAST_MONTH = {
 }
 SITE_RE = re.compile(r"^[a-z0-9][a-z0-9.\-]*$")
 MONTH_RE = re.compile(r"^(\d{4})-(0[1-9]|1[0-2])$")
+MODEL_RE = re.compile(r"^[A-Za-z0-9_.\-]+$")
 
 # Python 2.6's json writes floats with repr() (0.1 -> 0.10000000000000001).
 # Its encoder is pure Python, so FLOAT_REPR can shorten that to 15 digits.
@@ -62,6 +67,9 @@ CONF = {
     "db": "qa_decline",
     "serving_table": "site_metrics_monthly",
     "raw_table": "posts",
+    "trend_model_table": "site_trend_model",
+    "trend_summary_table": "site_trend_summary",
+    "group_summary_table": "q2_group_summary",
     "ledger": "/data/work/r2/ledger.json",
     "query_timeout": 120,
     "cache_ttl": 60,
@@ -210,6 +218,7 @@ def api_meta(params):
         "metrics_available": list(METRICS),
         "coverage_last_month": COVERAGE_LAST_MONTH,
         "metric_last_month": dict(METRIC_LAST_MONTH),
+        "trend_available": cached("trend_available", load_trend_available),
     }
 
 
@@ -317,10 +326,196 @@ def first(params, key):
     return v[0]
 
 
+# ---------------------------------------------------------------- Q2 (R4) tables
+# site_trend_summary columns, in R4 q2_trend_model_v2.py order (v1, then v2).
+SUMMARY_V1 = ["site", "metric", "domain_group", "model_id", "fit_start", "fit_end",
+              "post_start", "post_end", "pre_trend_pct_per_year", "post_gap_pct",
+              "placebo_min", "placebo_max", "beyond_placebo", "break_month",
+              "break_strength"]
+SUMMARY_V2 = ["unit", "post_gap_12m", "placebo_values", "n_fit_months",
+              "n_zero_months_excluded", "n_out_of_range", "smearing_factor",
+              "is_primary", "note"]
+SUMMARY_COLS = SUMMARY_V1 + SUMMARY_V2
+SUMMARY_TYPES = {
+    "pre_trend_pct_per_year": "float", "post_gap_pct": "float",
+    "placebo_min": "float", "placebo_max": "float", "break_strength": "float",
+    "post_gap_12m": "float", "smearing_factor": "float",
+    "n_fit_months": "int", "n_zero_months_excluded": "int", "n_out_of_range": "int",
+    "beyond_placebo": "bool", "is_primary": "bool",
+}
+TREND_COLS = ["month", "segment", "actual", "counterfactual", "band_low",
+              "band_high", "gap"]
+
+# q2_group_summary.csv columns (R4), loaded as a text table. Hyphens in the
+# placebo column names become underscores in the table and in the response.
+GROUP_COLS = ["metric", "unit", "n_sites_A", "n_sites_B", "did_12m", "did_12m_perm_p",
+              "did_12m_cluster_se_logpt", "did_full", "did_full_perm_p", "perm_type",
+              "n_perm", "did_placebo_2020_07", "did_placebo_2021_01",
+              "did_placebo_2021_07", "did_placebo_2021_11", "did_placebo_min",
+              "did_placebo_max", "did_beyond_placebo", "trend_gap12_median_A",
+              "trend_gap12_median_B", "trend_gap12_A_minus_B",
+              "share_sites_beyond_placebo_A", "share_sites_beyond_placebo_B",
+              "primary_model", "same_sign_trend_vs_did", "break_signal",
+              "break_signal_strict", "A_minus_B_break_month",
+              "A_minus_B_break_strength"]
+GROUP_TYPES = {"n_sites_A": "int", "n_sites_B": "int", "n_perm": "int",
+               "did_beyond_placebo": "bool", "same_sign_trend_vs_did": "bool",
+               "break_signal": "bool", "break_signal_strict": "bool",
+               "metric": "str", "unit": "str", "perm_type": "str",
+               "primary_model": "str", "A_minus_B_break_month": "str"}
+
+
+def convert(text, kind):
+    """impala-shell -B text -> JSON value. Empty strings from text tables are null."""
+    if text is None or text == "":
+        return None
+    if kind == "float":
+        try:
+            v = float(text)
+        except ValueError:
+            return None
+        if v != v:  # NaN
+            return None
+        return v
+    if kind == "int":
+        return int(float(text))
+    if kind == "bool":
+        return text.lower() in ("true", "1")
+    return text
+
+
+def parse_placebo(text):
+    """'2020-07:6.431;2021-01:NA' -> {'2020-07': 6.431, '2021-01': None}"""
+    out = {}
+    if not text:
+        return out
+    for part in text.split(";"):
+        if ":" not in part:
+            continue
+        k, v = part.split(":", 1)
+        try:
+            out[k] = float(v)
+        except ValueError:
+            out[k] = None
+    return out
+
+
+def load_trend_available():
+    try:
+        rows = run_query("SELECT COUNT(*) FROM %s WHERE is_primary = true"
+                         % tbl(CONF["trend_summary_table"]))
+    except QueryError:
+        return False
+    return bool(rows) and rows[0][0] is not None and int(rows[0][0]) > 0
+
+
+def load_trend_sites():
+    try:
+        rows = run_query("SELECT DISTINCT site FROM %s" % tbl(CONF["trend_summary_table"]))
+    except QueryError:
+        return {}
+    return dict((r[0], 1) for r in rows if r and r[0])
+
+
+def api_trend(params):
+    metric = first(params, "metric")
+    if metric not in METRICS:
+        raise ApiError(400, "INVALID_METRIC",
+                       "metric must be one of " + ", ".join(METRICS))
+    site = (first(params, "site") or "").strip().lower()
+    if not site:
+        raise ApiError(400, "INVALID_RANGE", "site is required")
+    if not SITE_RE.match(site):
+        raise ApiError(404, "SITE_NOT_FOUND", "unknown site: %s" % site)
+    m_from = parse_month(first(params, "from"), "from")
+    m_to = parse_month(first(params, "to"), "to")
+    if m_from and m_to and m_from > m_to:
+        raise ApiError(400, "INVALID_RANGE", "from must not be after to")
+    if not cached("trend_available", load_trend_available):
+        raise ApiError(404, "NOT_FOUND", "Q2 trend tables are not loaded yet")
+    if site not in cached("trend_sites", load_trend_sites):
+        raise ApiError(404, "SITE_NOT_FOUND", "no trend model for site: %s" % site)
+
+    # values are validated against SITE_RE / METRICS above
+    sql = ("SELECT %s FROM %s WHERE site = '%s' AND metric = '%s' AND is_primary = true"
+           % (", ".join(SUMMARY_COLS), tbl(CONF["trend_summary_table"]), site, metric))
+    rows = run_query(sql)
+    if not rows:
+        raise ApiError(404, "SITE_NOT_FOUND",
+                       "no trend model for %s / %s" % (site, metric))
+    srow = rows[0]
+    meta = {"site": site, "metric": metric, "dump_date": DUMP_DATE}
+    for i, col in enumerate(SUMMARY_COLS):
+        if col in ("site", "metric"):
+            continue
+        value = convert(srow[i], SUMMARY_TYPES.get(col, "str"))
+        if col == "model_id":
+            meta["model"] = value
+        elif col == "placebo_values":
+            meta[col] = parse_placebo(value)
+        else:
+            meta[col] = value
+
+    model_id = meta["model"]
+    if model_id is None or not MODEL_RE.match(model_id):
+        raise QueryError("unexpected model_id in %s" % CONF["trend_summary_table"])
+    sql = ("SELECT %s FROM %s WHERE site = '%s' AND metric = '%s' AND model_id = '%s' "
+           "ORDER BY month" % (", ".join(TREND_COLS), tbl(CONF["trend_model_table"]),
+                               site, metric, model_id))
+    data = []
+    for r in run_query(sql):
+        month = r[0]
+        if m_from and month < m_from:
+            continue
+        if m_to and month > m_to:
+            continue
+        row = {"site": site, "month": month, "segment": r[1]}
+        for i, col in enumerate(TREND_COLS[2:]):
+            row[col] = convert(r[i + 2], "float")
+        data.append(row)
+    meta["n_rows"] = len(data)
+    meta["from"] = m_from
+    meta["to"] = m_to
+    return {"data": data, "meta": meta}
+
+
+def api_group_summary(params):
+    metric = first(params, "metric")
+    if metric not in METRICS:
+        raise ApiError(400, "INVALID_METRIC",
+                       "metric must be one of " + ", ".join(METRICS))
+    sql = ("SELECT %s FROM %s WHERE metric = '%s'"
+           % (", ".join(GROUP_COLS), tbl(CONF["group_summary_table"]), metric))
+    try:
+        rows = run_query(sql)
+    except QueryError:
+        if not table_exists(CONF["group_summary_table"]):
+            raise ApiError(404, "NOT_FOUND", "q2_group_summary is not loaded yet")
+        raise
+    if not rows:
+        raise ApiError(404, "SITE_NOT_FOUND", "no group summary for %s" % metric)
+    row = {}
+    for i, col in enumerate(GROUP_COLS):
+        if col == "metric":
+            continue
+        row[col] = convert(rows[0][i], GROUP_TYPES.get(col, "float"))
+    return {"data": row, "meta": {"metric": metric, "dump_date": DUMP_DATE}}
+
+
+def table_exists(name):
+    try:
+        rows = run_query("SHOW TABLES IN %s LIKE '%s'" % (CONF["db"], name))
+    except QueryError:
+        return False
+    return any(r and r[0] == name for r in rows)
+
+
 ROUTES = {
     "/api/meta": api_meta,
     "/api/sites": api_sites,
     "/api/metrics": api_metrics,
+    "/api/trend": api_trend,
+    "/api/group_summary": api_group_summary,
 }
 
 
